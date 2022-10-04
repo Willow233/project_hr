@@ -3,18 +3,20 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">
+          <img src="@/assets/common/login-logo.png" alt="">
+        </h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="mobile"
+          v-model="loginForm.mobile"
+          placeholder="请输入手机号码"
+          name="mobile"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -30,22 +32,25 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
+        <!-- @keyup.enter.native="handleLogin"
+         enter --- 按键修饰符,监听enter的keyup事件
+         native --- 监听组件的原生事件  -->
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button class="loginBtn" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
 
       <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+        <span style="margin-right:20px;">账号:13800000002</span>
+        <span> 密码:123456</span>
       </div>
 
     </el-form>
@@ -53,33 +58,33 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { validMobile } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
-      } else {
-        callback()
-      }
+    const validateMobile = (rule, value, callback) => {
+      validMobile(value) ? callback() : callback(new Error('手机号码格式不正确'))
     }
-    const validatePassword = (rule, value, callback) => {
+    /*    const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('The password can not be less than 6 digits'))
       } else {
         callback()
       }
-    }
+    } */
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        mobile: [{ required: true, trigger: 'blur', message: '手机号不能为空' },
+          { validator: validateMobile, trigger: 'blur' }],
+        password: [{ required: true, trigger: 'blur', message: '密码不能为空' },
+          { min: 6, max: 16, trigger: 'blur', message: '密码长度为6-16位之间' }
+          // { validator: validatePassword, trigger: 'blur' }
+        ]
       },
       loading: false,
       passwordType: 'password',
@@ -141,6 +146,10 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  // 样式表中使用@时 前面需要加上~ 才能识别
+  background-image: url('~@/assets/common/login.jpg') ;
+  background-position: center;
+  background-size:cover;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -168,6 +177,17 @@ $cursor: #fff;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+
+  .el-form-item__error {
+    color: rgba(201, 44, 44, 0.75);
+    font-weight:600
+  }
+
+  .loginBtn {
+  background-color: #0093E9;
+  background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+  border: none;
   }
 }
 </style>
