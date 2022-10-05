@@ -9,7 +9,7 @@ export const imageError = {
     // dom 认为此时为图片
     // 当图片有地址，但加载失败时，会触发onerror事件
     dom.onerror = function() {
-      dom.src = dom.src || options.value
+      dom.src = options.value
       // 当图片出现异常时 会将指令配置的默认图片设置为该图片的内容
     }
   }
