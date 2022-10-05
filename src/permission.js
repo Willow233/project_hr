@@ -7,12 +7,15 @@ import 'nprogress/nprogress.css' // 引入进度条样式
 const whiteList = ['/login', '/404']
 // 路由前置守卫
 // next(false) 跳转终止
-router.beforeEach(function(to, from, next) {
+router.beforeEach(async function(to, from, next) {
   nprogress.start() // 开启进度条
   if (store.getters.token) {
     if (to.path === '/login') {
       next('/')
     } else {
+      if (!store.getters.userId) {
+        await store.dispatch('user/getUserInfo') // 使用await 把异步任务改为同步任务，不然用户信息还未获取就会继续执行
+      }
       next()
     }
   } else {

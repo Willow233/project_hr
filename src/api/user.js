@@ -9,10 +9,18 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
-
+// 获取用户基本资料
+export function getInfo() {
+  // token 在请求拦截器中统一注入了 此处不需要token
+  return request({
+    url: '/sys/profile',
+    method: 'post'
+  })
 }
 
-export function logout() {
-
+export function getUserDetailById(id) {
+  return request({
+    url: `/sys/user/${id}`,
+    method: 'get'
+  })
 }
