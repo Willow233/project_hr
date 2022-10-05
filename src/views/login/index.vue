@@ -59,6 +59,7 @@
 
 <script>
 import { validMobile } from '@/utils/validate'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -100,6 +101,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['user/login']), //  引入方法
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -111,21 +113,23 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      // 表单的手动校验
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+          try {
+            this.loading = true
+            await this['user/login'](this.loginForm)
+            // await下面的代码都是成功执行的代码
+            this.$router.push('/')
+          } catch (error) {
+            console.log(error)
+          } finally {
             this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
+          }
         }
       })
     }
+    // ref 可以获取到一个元素的dom对象，ref作用到组件上的时候，可以获取该组件的实例 this
   }
 }
 </script>

@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_hr_management_token'
+const TokenKey = 'hrsaas-ihrm-token'
 
 export function getToken() {
   return Cookies.get(TokenKey)
