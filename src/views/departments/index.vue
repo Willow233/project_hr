@@ -9,7 +9,7 @@
         <!-- 树形结构主体 -->
         <el-row>
           <el-tree :data="departs" :props="defaultProps" :default-expand-all="true">
-            <tree-tools slot-scope="{ data }" :tree-node="data" />
+            <tree-tools slot-scope="{ data }" :tree-node="data" @delDepts="getDepartments" />
           </el-tree>
         </el-row>
       </el-card>
@@ -19,6 +19,9 @@
 
 <script>
 import TreeTools from './components/tree-tool.vue'
+import { getDepartments } from '@/api/departments.js'
+import { tranListToTreeData } from '@/utils/index'
+
 export default {
   components: {
     TreeTools
@@ -33,11 +36,20 @@ export default {
         label: 'name',
         children: 'children'
       },
-      departs: [{ name: '总裁办', manager: '曹操', children: [{ name: '董事会', manager: '曹丕' }] },
-        { name: '行政部', manager: '刘备' },
-        { name: '人事部', manager: '孙权' }]
+      departs: []
     }
+  },
+  created() {
+    this.getDepartments()
+  },
+  methods: {
+    async getDepartments() {
+      const result = await getDepartments()
+      this.departs = tranListToTreeData(result.depts, '')
+    }
+
   }
+
 }
 </script>
 
