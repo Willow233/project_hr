@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/departments'),
     // 路由元信息 用于存储数据
     meta: {
-      title: '部门管理', // 左侧导航栏名称
+      title: '组织架构', // 左侧导航栏名称
       icon: 'tree'
     }
   }]
