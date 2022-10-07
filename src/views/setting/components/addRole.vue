@@ -36,7 +36,7 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入角色名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
 
         ],
         description: [

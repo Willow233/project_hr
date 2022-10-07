@@ -11,6 +11,7 @@
                 icon="el-icon-plus"
                 size="small"
                 type="primary"
+                @click="editRole()"
               >新增角色</el-button>
             </el-row>
             <!-- 表格 -->
