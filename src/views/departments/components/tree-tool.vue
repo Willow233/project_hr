@@ -48,14 +48,16 @@ export default {
     handleCommand(command) {
       if (command === 'add') {
         // 添加子部门
+        this.$emit('addDepts', this.treeNode)
       } else if (command === 'edit') {
         //  编辑部门信息
+        this.$emit('editDepts', this.treeNode)
       } else if (command === 'delete') {
         this.$confirm('确定删除该部门么？').then(() => {
           return deleteDepartments(this.treeNode.id) // 返回promise对象 后端数据删除
         }).then(() => {
           //
-          this.$emit('delDepts') // 触发父组件自定义事件 更新前端页面
+          this.$emit('updateDepts') // 触发父组件自定义事件 更新前端页面
           this.$message.success('删除部门成功')
         })
       }
