@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/setting'),
     // 路由元信息 用于存储数据
     meta: {
-      title: '公司设置', // 左侧导航栏名称
+      title: '角色设置', // 左侧导航栏名称
       icon: 'setting'
     }
   }]
