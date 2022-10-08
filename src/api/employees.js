@@ -22,3 +22,19 @@ export function delEmployee(id) {
     method: 'delete'
   })
 }
+
+// 新增员工
+export function addNewEmployee(data) {
+  return request({
+    url: '/sys/user',
+    method: 'post',
+    data
+  })
+}
+
+// 获取员工基本信息
+export function getBasicInfo(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
