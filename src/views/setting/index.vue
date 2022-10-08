@@ -88,16 +88,13 @@ export default {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
-          }).then(() => {
-          // 调用接口，删除后端数据
-          delRole(id)
-        }).then(() => {
-          this.$message.success('删除成功')
-          // 更新前端页面
-          this.getRoleList()
-        })
+          })
+        // 只有点击了确定 才能进入到下方
+        await delRole(id) // 调用删除接口
+        this.getRoleList() // 重新加载数据
+        this.$message.success('删除角色成功')
       } catch (error) {
-        this.$message.error('删除失败')
+        console.log(error)
       }
     },
 
