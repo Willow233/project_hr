@@ -1,35 +1,45 @@
 <template>
-  <el-dialog title="新增员工" :visible="showDialog" width="35%" top="8vh">
+  <el-dialog title="新增员工" :visible="showDialog" width="35%" top="8vh" @close="btnCancel">
     <!-- 表单 -->
-    <el-form label-width="120px" :model="employeeForm" :rules="rules" ref="employeeForm">
-      <el-form-item label="姓名">
-        <el-input style="width:90%" placeholder="请输入姓名" />
+    <el-form ref="employeeForm" label-width="120px" :model="employeeForm" :rules="rules">
+      <el-form-item label="姓名" prop="username">
+        <el-input v-model="employeeForm.username" style="width:90%" placeholder="请输入姓名" />
       </el-form-item>
-      <el-form-item label="手机">
-        <el-input style="width:90%" placeholder="请输入手机号" />
+      <el-form-item label="手机" prop="mobile">
+        <el-input v-model="employeeForm.mobile" style="width:90%" placeholder="请输入手机号" />
       </el-form-item>
-      <el-form-item label="入职时间">
-        <el-date-picker style="width:90%" placeholder="请选择入职时间" />
+      <el-form-item label="入职时间" prop="timeOfEntry">
+        <el-date-picker v-model="employeeForm.timeOfEntry" style="width:90%" placeholder="请选择入职时间" />
       </el-form-item>
-      <el-form-item label="聘用形式">
-        <el-select style="width:90%" placeholder="请选择" />
+      <el-form-item label="聘用形式" prop="formOfEmployment">
+        <el-select v-model="employeeForm.formOfEmployment" style="width:90%" placeholder="请选择">
+          <el-option v-for="item in EmployeeEnum.hireType" :key="item.id" :label="item.value" :value="item.id" />
+        </el-select>
       </el-form-item>
-      <el-form-item label="工号">
-        <el-input style="width:90%" placeholder="请输入工号" />
+      <el-form-item label="工号" prop="workNumber">
+        <el-input v-model="employeeForm.workNumber" style="width:90%" placeholder="请输入工号" />
       </el-form-item>
-      <el-form-item label="部门">
-        <el-input style="width:90%" placeholder="请选择部门" />
+      <el-form-item label="部门" prop="departmentName">
+        <el-input v-model="employeeForm.departmentName" style="width:90%" placeholder="请选择部门" @focus="getDepartments" />
+        <el-tree
+          v-if="showTree"
+          v-loading="loading"
+          :data="treeData"
+          :props="{label:'name'}"
+          :default-expand-all="true"
+          @node-click="selectNode"
+        />
       </el-form-item>
-      <el-form-item label="转正时间">
-        <el-date-picker style="width:90%" placeholder="请选择转正时间" />
+      <el-form-item label="转正时间" prop="correctionTime">
+        <el-date-picker v-model="employeeForm.correctionTime" style="width:90%" placeholder="请选择转正时间" />
       </el-form-item>
     </el-form>
     <!-- el中内置的footer插槽 -->
     <template v-slot:footer>
       <el-row type="flex" justify="center">
         <el-col :span="6">
-          <el-button type="primary" size="small">确定</el-button>
-          <el-button size="small">取消</el-button>
+          <el-button type="primary" size="small" @click="btnOK">确定</el-button>
+          <el-button size="small" @click="btnCancel">取消</el-button>
         </el-col>
       </el-row>
     </template>
@@ -37,7 +47,10 @@
 </template>
 
 <script>
-import { addNewEmployee, getBasicInfo } from '@/api/employees'
+import { addNewEmployee, getBasicInfo, editBasicInfo } from '@/api/employees'
+import { getDepartments } from '@/api/departments'
+import { tranListToTreeData } from '@/utils'
+import EmployeeEnum from '@/api/constant/employees'
 export default {
   props: {
     showDialog: {
@@ -47,6 +60,7 @@ export default {
   },
   data() {
     return {
+      EmployeeEnum, // 定义表单数据
       employeeForm: {
         username: '',
         mobile: '',
@@ -65,35 +79,63 @@ export default {
         workNumber: [{ required: true, message: '工号不能为空', trigger: 'blur' }],
         departmentName: [{ required: true, message: '部门不能为空', trigger: 'change' }],
         timeOfEntry: [{ required: true, message: '入职时间', trigger: 'blur' }]
-      }
+      },
+      treeData: [],
+      showTree: false,
+      loading: false
     }
   },
   created() {
     this.getEmployeeInfo()
   },
   methods: {
+    async getDepartments() {
+      this.showTree = true
+      this.loading = true
+      const result = await getDepartments()
+      this.treeData = tranListToTreeData(result.depts, '')
+      this.loading = false
+    },
+    selectNode(node) {
+      this.employeeForm.departmentName = node.name
+      this.showTree = false
+    },
+
     async getEmployeeInfo(id) {
       this.employeeForm = await getBasicInfo(id)
     },
-    addNewEmployee(){
-
-    },
     async btnOK() {
-      this.$refs.employeeForm.validate((valid)=>{
+      this.$refs.employeeForm.validate(async valid => {
         if (valid) {
-            if(id){
-              // 触发编辑员工信息
-            } else {
-              // 触发新增员工
-              await addNewEmployee(this.employeeForm)
-            }
-            // 调用父组件方法 更新前端页面数据
+          if (this.employeeForm.id) {
+            // 触发编辑员工信息
+            await editBasicInfo(this.employeeForm)
+          } else {
+            // 触发新增员工
+            await addNewEmployee(this.employeeForm)
+          }
+          // 调用父组件方法 更新前端页面数据
           this.$emit('getEmployeesList')
           // 关闭窗口
           this.btnCancel()
-          }
+        }
       })
-      
+    },
+    btnCancel() {
+      // 还原表单数据
+      this.employeeForm = {
+        username: '',
+        mobile: '',
+        formOfEmployment: '',
+        workNumber: '',
+        departmentName: '',
+        timeOfEntry: '',
+        correctionTime: ''
+      }
+      // 还原校验
+      this.$refs.employeeForm.resetFields()
+      // 关闭窗口
+      this.$emit('update:showDialog', false)
     }
   }
 }

@@ -38,3 +38,12 @@ export function getBasicInfo(id) {
     url: `/sys/user/${id}`
   })
 }
+
+// 根据id编辑员工信息
+export function editBasicInfo(data) {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'put',
+    data
+  })
+}

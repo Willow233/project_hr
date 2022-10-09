@@ -53,7 +53,7 @@
       </el-card>
     </div>
     <!-- 添加员工弹出窗口 -->
-    <AddEmployee ref="addEmployee" :show-dialog="showDialog" :get-employees-list="getEmployeesList" /></div>
+    <AddEmployee ref="addEmployee" :show-dialog.sync="showDialog" :get-employees-list="getEmployeesList" /></div>
 </template>
 
 <script>
@@ -118,7 +118,7 @@ export default {
     // 新增员工
     addNewEmployee(id) {
       this.showDialog = true
-      this.$refs.addEmployee.addNewEmployee()
+      // this.$refs.addEmployee.addNewEmployee()
     }
 
   }
