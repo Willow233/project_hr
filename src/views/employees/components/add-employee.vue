@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { addNewEmployee, getBasicInfo, editBasicInfo } from '@/api/employees'
+import { addNewEmployee, getBasicInfo } from '@/api/employees'
 import { getDepartments } from '@/api/departments'
 import { tranListToTreeData } from '@/utils'
 import EmployeeEnum from '@/api/constant/employees'
@@ -105,21 +105,17 @@ export default {
       this.employeeForm = await getBasicInfo(id)
     },
     async btnOK() {
-      this.$refs.employeeForm.validate(async valid => {
-        if (valid) {
-          if (this.employeeForm.id) {
-            // 触发编辑员工信息
-            await editBasicInfo(this.employeeForm)
-          } else {
-            // 触发新增员工
-            await addNewEmployee(this.employeeForm)
-          }
-          // 调用父组件方法 更新前端页面数据
-          this.$emit('getEmployeesList')
-          // 关闭窗口
-          this.btnCancel()
-        }
-      })
+      try {
+        await this.$refs.employeeForm.validate() // 校验成功
+        await addNewEmployee(this.employeeForm) // 调用新增接口
+        // 调用父组件方法 更新前端页面数据
+        this.$emit('getEmployeesList')
+        // 方法二 this.$parent.getEmployeesList && this.$parent.getEmployeesList() 直接调用父组件的更新方法(不常用)
+        // 关闭窗口
+        this.btnCancel()
+      } catch (error) {
+        console.log(error)
+      }
     },
     btnCancel() {
       // 还原表单数据
@@ -136,6 +132,7 @@ export default {
       this.$refs.employeeForm.resetFields()
       // 关闭窗口
       this.$emit('update:showDialog', false)
+      this.showTree = false
     }
   }
 }
