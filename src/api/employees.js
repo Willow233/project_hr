@@ -32,18 +32,22 @@ export function addNewEmployee(data) {
   })
 }
 
-// 获取员工基本信息
-export function getBasicInfo(id) {
-  return request({
-    url: `/sys/user/${id}`
-  })
-}
+// 根据id获取员工基本信息 user里封装过了
 
-// 根据id编辑员工信息
-export function editBasicInfo(data) {
+// 根据id保存员工信息
+export function saveBasicInfo(data) {
   return request({
     url: `/sys/user/${data.id}`,
     method: 'put',
+    data
+  })
+}
+
+// 批量导入员工的接口
+export function importEmployee(data) {
+  return request({
+    url: '/sys/user/batch',
+    method: 'post',
     data
   })
 }

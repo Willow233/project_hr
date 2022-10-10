@@ -16,7 +16,7 @@
 
 <script>
 // npm i xlsx 安装xlsx包
-import XLSX from 'xlsx'
+import * as XLSX from 'xlsx/xlsx.mjs'
 export default {
   props: {
     beforeUpload: Function, // eslint-disable-line
@@ -83,14 +83,14 @@ export default {
     readerData(rawFile) {
       this.loading = true
       return new Promise((resolve, reject) => {
-        const reader = new FileReader()
+        const reader = new FileReader() // JS原生读取文件 FileReader
         reader.onload = e => {
           const data = e.target.result
           const workbook = XLSX.read(data, { type: 'array' })
           const firstSheetName = workbook.SheetNames[0]
           const worksheet = workbook.Sheets[firstSheetName]
-          const header = this.getHeaderRow(worksheet)
-          const results = XLSX.utils.sheet_to_json(worksheet)
+          const header = this.getHeaderRow(worksheet) // 数组
+          const results = XLSX.utils.sheet_to_json(worksheet) // 数组
           this.generateData({ header, results })
           this.loading = false
           resolve()
