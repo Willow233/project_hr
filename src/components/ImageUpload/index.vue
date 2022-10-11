@@ -106,6 +106,9 @@ export default {
               }
               return obj
             })
+            //   关闭进度条 重置百分比
+            this.percentage = null
+            this.showPercentage = false
           }
         })
       }
