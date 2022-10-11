@@ -32,7 +32,12 @@ export function addNewEmployee(data) {
   })
 }
 
-// 根据id获取员工基本信息 user里封装过了
+// 根据id获取员工基本信息
+export function getBasicInfo(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
 
 // 根据id保存员工信息
 export function saveBasicInfo(data) {
