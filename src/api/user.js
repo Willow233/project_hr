@@ -20,7 +20,6 @@ export function getInfo() {
 
 export function getUserDetailById(id) {
   return request({
-    url: `/sys/user/${id}`,
-    method: 'get'
+    url: `/sys/user/${id}`
   })
 }

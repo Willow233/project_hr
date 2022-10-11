@@ -13,7 +13,7 @@ export default {
       icon: 'user'
     }
   }, {
-    path: '/detail/:id?', // query传参 动态路由传参 ?表示id不是必须的
+    path: 'detail/:id?', // query传参 动态路由传参 ?表示id不是必须的
     component: () => import('@/views/employees/detail'),
     hidden: true, // 表示该内容不在左侧菜单显示
     meta: {
