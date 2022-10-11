@@ -37,7 +37,7 @@
           </el-tab-pane>
           <!-- 岗位信息页面 -->
           <el-tab-pane label="岗位信息">
-            <component :is="JobInfo" />
+            <component :is="jobComponent" />
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { saveBasicInfo } from '@/api/employees.js'
+import { saveUserDetailById } from '@/api/employees.js'
 import { getUserDetailById } from '@/api/user.js'
 import UserInfo from './components/user-info.vue'
 import JobInfo from './components/job-info.vue'
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       userComponent: 'UserInfo', // 动态组件绑定
-      JobInfo,
+      jobComponent: 'JobInfo',
       // 此处是route 不是router
       userId: this.$route.params.id,
       employeeInfo: {
@@ -83,7 +83,7 @@ export default {
       try {
         this.$refs.employeeInfo.validate(async valid => {
           if (valid) {
-            await saveBasicInfo({ ...this.employeeInfo, password: this.employeeInfo.password2 })
+            await saveUserDetailById({ ...this.employeeInfo, password: this.employeeInfo.password2 })
             this.$message.success('更新密码成功')
           } else {
             this.message.error('用户名或密码格式不正确')

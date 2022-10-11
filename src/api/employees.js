@@ -40,7 +40,7 @@ export function getBasicInfo(id) {
 }
 
 // 根据id保存员工信息
-export function saveBasicInfo(data) {
+export function saveUserDetailById(data) {
   return request({
     url: `/sys/user/${data.id}`,
     method: 'put',
@@ -53,6 +53,38 @@ export function importEmployee(data) {
   return request({
     url: '/sys/user/batch',
     method: 'post',
+    data
+  })
+}
+
+// 获取员工详细基础信息
+export function getPersonalDetail(id) {
+  return request({
+    url: `/employees/${id}/personalInfo`
+  })
+}
+
+// 保存员工详细基础信息
+export function updatePersonal(data) {
+  return request({
+    url: `/employees/${data.id}/personalInfo`,
+    method: 'put',
+    data
+  })
+}
+
+// 获取员工岗位信息
+export function getJobDetail(id) {
+  return request({
+    url: `/employees/${id}/jobs`
+  })
+}
+
+// 保存员工岗位信息
+export function updateJob(data) {
+  return request({
+    url: `/employees/${data.userId}/jobs`,
+    method: 'put',
     data
   })
 }
