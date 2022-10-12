@@ -17,7 +17,7 @@
       <!-- :class="{类名：布尔值}" -->
       <i class="el-icon-plus" />
     </el-upload>
-    <el-progress v-if="showPercentage" :percentage="50" style="width:180px;" />
+    <el-progress v-if="showPercentage" :percentage="percentage" style="width:180px;" />
     <el-dialog :visible.sync="showDialog">
       <img :src="imgUrl" alt="" width="100%">
     </el-dialog>
@@ -56,6 +56,9 @@ export default {
       // fileList 是删除之后 其他文件
     //   this.fileList = this.fileList.filter(item => item.uid !== file.uid)
       this.fileList = fileList
+      //   关闭进度条 重置百分比
+      this.percentage = null
+      this.showPercentage = false
     },
 
     changeFile(file, fileList) {
@@ -79,11 +82,12 @@ export default {
         return false
       }
       this.currentFileUid = file.uid
-      this.showPercentage = true
+      this.showPercentage = false
       return true
     },
     upload(params) {
       if (params.file) {
+        this.showPercentage = true
         cos.putObject({
           Bucket: 'hr-manage-picture-1314303348', /* 填入您自己的存储桶，必须字段 */
           Region: 'ap-beijing', /* 存储桶所在地域，例如ap-beijing，必须字段 */
@@ -91,12 +95,12 @@ export default {
           Body: params.file, /* 必须，上传文件对象，可以是input[type="file"]标签选择本地文件后得到的file对象 */
           StorageClass: 'STANDARD', /* 上传的模式类型 默认标准*/
           onProgress: (params) => {
-            this.percentage = params.percent * 100
+            this.percentage = Math.trunc(params.percent * 100)
           }
         }, (err, data) => {
-        //   console.log(err || data)
+          // console.log(err || data)
           //   data 处理返回数据
-          if (!err && data.status === 200) {
+          if (!err && data.statusCode === 200) {
             this.fileList = this.fileList.map(obj => {
               // 此处用了this 所以要把普通函数function(err,data)改为箭头函数
               if (obj.uid === this.currentFileUid) {
@@ -109,6 +113,7 @@ export default {
             //   关闭进度条 重置百分比
             this.percentage = null
             this.showPercentage = false
+            console.log(this.fileList)
           }
         })
       }
