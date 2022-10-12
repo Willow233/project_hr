@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <!--  需要先安装 npm i cos-js-sdk-v5 --save 腾讯云cos存储插件 -->
+
     <el-upload
       list-type="picture-card"
       :limit="1"
@@ -12,26 +12,31 @@
       :on-remove="handleRemove"
       :on-change="changeFile"
       :before-upload="beforeUpload"
+      :http-request="upload"
     >
       <!-- :class="{类名：布尔值}" -->
       <i class="el-icon-plus" />
     </el-upload>
+    <el-progress v-if="showPercentage" :percentage="percentage" style="width:180px;" />
     <el-dialog :visible.sync="showDialog">
       <img :src="imgUrl" alt="" width="100%">
     </el-dialog>
+
   </div>
 
 </template>
 
 <script>
+import { cos } from './cos.js'// 通常情况下应在后端配置cos存储相关信息
 export default {
   data() {
     return {
       showDialog: false,
-      fileList: [
-        { url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.dtstatic.com%2Fuploads%2Fblog%2F202102%2F28%2F20210228085905_de8f7.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.dtstatic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1668085616&t=254a08c76322bc113308539a990a7ab0' }
-      ],
-      imgUrl: ''
+      fileList: [],
+      imgUrl: '',
+      currentFileUid: null, // 记录当前上传的uid
+      percentage: null,
+      showPercentage: false
     }
   },
   computed: {
@@ -51,6 +56,9 @@ export default {
       // fileList 是删除之后 其他文件
     //   this.fileList = this.fileList.filter(item => item.uid !== file.uid)
       this.fileList = fileList
+      //   关闭进度条 重置百分比
+      this.percentage = null
+      this.showPercentage = false
     },
 
     changeFile(file, fileList) {
@@ -62,7 +70,7 @@ export default {
     // 上传前检查文件格式及大小
     beforeUpload(file) {
       // 检查文件类型
-      const types = ['image/jepg', 'image/gif', 'image/bmp', 'image/png']
+      const types = ['image/jpeg', 'image/gif', 'image/bmp', 'image/png']
       if (!types.some(item => item === file.type)) {
         this.$message.error('图片格式不正确')
         return false
@@ -73,7 +81,42 @@ export default {
         this.$message.error('图片大小应在5M以内')
         return false
       }
+      this.currentFileUid = file.uid
+      this.showPercentage = false
       return true
+    },
+    upload(params) {
+      if (params.file) {
+        this.showPercentage = true
+        cos.putObject({
+          Bucket: 'hr-manage-picture-1314303348', /* 填入您自己的存储桶，必须字段 */
+          Region: 'ap-beijing', /* 存储桶所在地域，例如ap-beijing，必须字段 */
+          Key: params.file.name, /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
+          Body: params.file, /* 必须，上传文件对象，可以是input[type="file"]标签选择本地文件后得到的file对象 */
+          StorageClass: 'STANDARD', /* 上传的模式类型 默认标准*/
+          onProgress: (params) => {
+            this.percentage = Math.trunc(params.percent * 100)
+          }
+        }, (err, data) => {
+          // console.log(err || data)
+          //   data 处理返回数据
+          if (!err && data.statusCode === 200) {
+            this.fileList = this.fileList.map(obj => {
+              // 此处用了this 所以要把普通函数function(err,data)改为箭头函数
+              if (obj.uid === this.currentFileUid) {
+                return { url: 'http://' + data.Location, upload: true }
+                // upload为true 表示该文件上传完毕
+                // 后续表单中 将根据upload是否完成判断是否可以提交保存
+              }
+              return obj
+            })
+            //   关闭进度条 重置百分比
+            this.percentage = null
+            this.showPercentage = false
+            console.log(this.fileList)
+          }
+        })
+      }
     }
   }
 }

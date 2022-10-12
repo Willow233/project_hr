@@ -27,6 +27,14 @@
           </el-tab-pane>
           <!-- 个人详情页面 -->
           <el-tab-pane label="个人详情">
+            <!-- 打印按钮 -->
+            <el-row type="flex" justify="end">
+              <el-tooltip content="打印个人基本信息">
+                <router-link :to="`/employees/print/${userId}?type=personal`">
+                  <i class="el-icon-printer" />
+                </router-link>
+              </el-tooltip>
+            </el-row>
             <!-- <UserInfo /> -->
             <component :is="userComponent" />
             <!-- vue js中内置了一个组件component 可以是任何组件
@@ -37,6 +45,15 @@
           </el-tab-pane>
           <!-- 岗位信息页面 -->
           <el-tab-pane label="岗位信息">
+            <!-- 打印按钮 -->
+            <el-row type="flex" justify="end">
+              <el-tooltip content="打印岗位信息">
+                <router-link :to="`/employees/print/${userId}?type=job`">
+                  <i class="el-icon-printer" />
+                </router-link>
+              </el-tooltip>
+            </el-row>
+            <!-- JobInfo -->
             <component :is="jobComponent" />
           </el-tab-pane>
         </el-tabs>
