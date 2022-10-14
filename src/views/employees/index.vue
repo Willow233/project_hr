@@ -35,7 +35,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -53,7 +53,10 @@
       </el-card>
     </div>
     <!-- 添加员工弹出窗口 -->
-    <AddEmployee ref="addEmployee" :show-dialog.sync="showDialog" :get-employees-list="getEmployeesList" /></div>
+    <add-employee ref="addEmployee" :show-dialog.sync="showDialog" :get-employees-list="getEmployeesList" />
+    <!-- 分配角色弹出窗口 -->
+    <assign-role ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
+  </div>
 </template>
 
 <script>
@@ -61,10 +64,12 @@ import { getEmployeesList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
+import AssignRole from './components/assign-role.vue'
 
 export default {
   components: {
-    AddEmployee
+    AddEmployee,
+    AssignRole
   },
   data() {
     return {
@@ -75,7 +80,9 @@ export default {
       },
       employeesList: [],
       loading: false,
-      showDialog: false
+      showDialog: false,
+      showRoleDialog: false,
+      userId: null
     }
   },
   created() {
@@ -172,6 +179,12 @@ export default {
           return item[headers[key]]
         })
       })
+    },
+    // 分配角色
+    async editRole(id) {
+      this.userId = id // 再试一下传值
+      await this.$refs.assignRole.getUserDetailById(id) // 使用await 让异步任务结束后再执行this.showRoleDialog = true 不然弹窗出现时 数据还没获取完成
+      this.showRoleDialog = true
     }
 
   }
