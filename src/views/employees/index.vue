@@ -180,7 +180,7 @@ export default {
         })
       })
     },
-    // 分配角色
+    // 分配角色 权限一般分割为：页面访问权限（前端）、按钮操作权限（前端）、API访问权限（常在后端设置）
     async editRole(id) {
       this.userId = id // 再试一下传值
       await this.$refs.assignRole.getUserDetailById(id) // 使用await 让异步任务结束后再执行this.showRoleDialog = true 不然弹窗出现时 数据还没获取完成
