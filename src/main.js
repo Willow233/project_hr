@@ -14,6 +14,7 @@ import router from './router'
 import Components from './components'
 import * as filters from '@/filters'
 import * as directives from '@/directives'
+import checkPermission from './mixin/checkPermission'
 import '@/icons' // icon
 import '@/permission' // permission control
 import Print from 'vue-print-nb'
@@ -34,6 +35,7 @@ Object.keys(filters).forEach(key => {
 Vue.config.productionTip = false
 Vue.use(Components)
 Vue.use(Print) // 注册打印组件
+Vue.mixin(checkPermission) // 全局混入
 
 new Vue({
   el: '#app',
