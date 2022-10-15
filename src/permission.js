@@ -13,10 +13,20 @@ router.beforeEach(async function(to, from, next) {
     if (to.path === '/login') {
       next('/')
     } else {
+      // 判断vuex中是否有userId 表示已有资料 不需要获取
       if (!store.getters.userId) {
-        await store.dispatch('user/getUserInfo') // 使用await 把异步任务改为同步任务，不然用户信息还未获取就会继续执行
+        const { roles } = await store.dispatch('user/getUserInfo') // 使用await 把异步任务改为同步任务，不然用户信息还未获取就会继续执行
+        const routes = await store.dispatch('permission/filterRouter', roles.menus)
+        // routes是筛选得到的动态路由
+        // 动态路由添加到路由表中，在默认路由表中 静态路由 没有动态路由
+        // addRoutes router的API方法 添加动态路由到路由表
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
+        // 404必须放在最后
+        // addRoutes后必须用next(to.path)而不能直接用next() *已知缺陷
+        next(to.path)
+      } else {
+        next()
       }
-      next()
     }
   } else {
     if (whiteList.indexOf(to.path) > -1) {

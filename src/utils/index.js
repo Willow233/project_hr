@@ -125,7 +125,8 @@ export function tranListToTreeData(list, rootValue) {
     if (item.pid === rootValue) {
       const children = tranListToTreeData(list, item.id)
       if (children.length) {
-        item.children = children
+        // children.length长度大于0  表示有子节点
+        item.children = children // 添加子节点
       }
       arr.push(item)
     }

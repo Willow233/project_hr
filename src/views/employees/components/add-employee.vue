@@ -109,7 +109,7 @@ export default {
         await this.$refs.employeeForm.validate() // 校验成功
         await addNewEmployee(this.employeeForm) // 调用新增接口
         // 调用父组件方法 更新前端页面数据
-        this.$emit('getEmployeesList')
+        this.$emit('getEmployeeList')
         // 方法二 this.$parent.getEmployeesList && this.$parent.getEmployeesList() 直接调用父组件的更新方法(不常用)
         // 关闭窗口
         this.btnCancel()

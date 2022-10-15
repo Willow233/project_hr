@@ -24,7 +24,7 @@
                 <template slot-scope="scope">
                   <el-button size="small" type="primary" @click="editRole(scope.row.id)">编辑</el-button>
                   <el-button size="small" type="danger" @click="delRole(scope.row.id)">删除</el-button>
-                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button size="small" type="success" @click="assignRole(scope.row.id)">分配权限</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -43,15 +43,25 @@
         </el-tabs>
       </el-card>
     </div>
+    <!-- 添加角色 -->
     <add-role ref="addRole" :show-dialog.sync="showDialog" @getRoleList="getRoleList" />
+    <!-- 分配权限 -->
+    <assign-role
+      ref="assignRole"
+      :show-perm-dialog.sync="showPermDialog"
+      @getRoleList="getRoleList"
+    />
+
   </div>
 </template>
 
 <script>
 import { getRoleList, delRole } from '@/api/setting.js'
 import AddRole from './components/addRole.vue'
+import AssignRole from './components/assignRole.vue'
+
 export default {
-  components: { AddRole },
+  components: { AddRole, AssignRole },
   data() {
     return {
       page: {
@@ -61,7 +71,7 @@ export default {
       },
       roleList: [],
       showDialog: false,
-      currentId: null
+      showPermDialog: false
     }
   },
   created() {
@@ -103,8 +113,13 @@ export default {
       // 获取当前节点角色信息
       this.showDialog = true
       this.$refs.addRole.getRoleDetail(id)
+    },
+    // 分配角色权限
+    assignRole(id) {
+      // 获取该id的角色权限
+      this.$refs.assignRole.getPermId(id)
+      this.showPermDialog = true
     }
-
   }
 }
 </script>
