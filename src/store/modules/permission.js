@@ -1,15 +1,16 @@
 import { constantRoutes, asyncRoutes } from '@/router'
 
 const state = {
-  routes: constantRoutes// 路由表 表示当前用户所拥有的路由权限
+  routes: [...constantRoutes, ...asyncRoutes]
+  // routes: constantRoutes// 路由表 表示当前用户所拥有的路由权限
 
 }
 const mutations = {
   // 定义修改router的mutations
-  // payload 认为是我们登录成功需要添加的新路由
-  setRouter(state, newRoutes) {
-    state.routes = [...constantRoutes, ...newRoutes]
-  }
+  // payload （newRoutes）认为是我们登录成功需要添加的新路由
+  // setRouter(state, newRoutes) {
+  //   state.routes = [...constantRoutes, ...newRoutes]
+  // }
 }
 const actions = {
   // 筛选权限路由

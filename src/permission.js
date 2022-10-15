@@ -20,7 +20,8 @@ router.beforeEach(async function(to, from, next) {
         // routes是筛选得到的动态路由
         // 动态路由添加到路由表中，在默认路由表中 静态路由 没有动态路由
         // addRoutes router的API方法 添加动态路由到路由表
-        router.addRoutes(routes)
+        router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
+        // 404必须放在最后
         // addRoutes后必须用next(to.path)而不能直接用next() *已知缺陷
         next(to.path)
       } else {

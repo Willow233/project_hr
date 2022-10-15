@@ -1,6 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getInfo, getUserDetailById } from '@/api/user'
-
+import { resetRouter } from '@/api/user'
 const state = {
   token: getToken(), // 设置token为共享状态 初始化vuex的时候 就先从缓存中读取
   userInfo: {}
@@ -43,6 +43,13 @@ const actions = {
   logout(context) {
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    // 重置路由
+    resetRouter()
+    // 重置vuex下的路由
+    // vuex子模块调用子模块的action
+    // 1.不加命名空间 所有的mutation actions 挂载在全局上 可随意调用 （不建议）
+    // 2. mutations 名称，载荷，payload 第三个参数 {root:true}调用根级的mutations 或 actions
+    context.commit('permission/setRouter', [], { root: true })
   }
 
 }
