@@ -96,7 +96,7 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
 
-  // routes: [...constantRoutes, ...asyncRoutes] 临时显示所有路由
+  // routes: [...constantRoutes, ...asyncRoutes] // 临时显示所有路由
   // 改成只有静态路由 从而实现动态加载路由权限
   routes: [...constantRoutes]
 })

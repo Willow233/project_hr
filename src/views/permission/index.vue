@@ -11,6 +11,7 @@
       <el-table :title="showText" border :data="list" row-key="id">
         <el-table-column label="名称" prop="name" />
         <el-table-column label="标识" prop="code" />
+        <!-- Todo 优化一级 标识改为下拉菜单栏 和 路由的命名相对应 -->
         <el-table-column label="描述" prop="description" />
         <el-table-column label="操作">
           <template v-slot="{row}">
