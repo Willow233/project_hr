@@ -57,7 +57,7 @@ export default {
       const { roleIds } = await getUserDetailById(id) // 这里不能直接用this.userId 因为props传值是异步的 此时可能还没获取到userId值
       this.roleIds = roleIds
     },
-    async btnOK() {
+    async btnOk() {
       // 提交表单
       await assignRoles({ id: this.userId, permIds: this.roleIds })
       // 关闭窗口

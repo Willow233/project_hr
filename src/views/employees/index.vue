@@ -53,14 +53,14 @@
       </el-card>
     </div>
     <!-- 添加员工弹出窗口 -->
-    <add-employee ref="addEmployee" :show-dialog.sync="showDialog" :get-employees-list="getEmployeesList" />
+    <add-employee ref="addEmployee" :show-dialog.sync="showDialog" :get-employee-list="getEmployeeList" />
     <!-- 分配角色弹出窗口 -->
     <assign-role ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
   </div>
 </template>
 
 <script>
-import { getEmployeesList, delEmployee } from '@/api/employees'
+import { getEmployeeList, delEmployee } from '@/api/employees'
 import EmployeeEnum from '@/api/constant/employees'
 import AddEmployee from './components/add-employee.vue'
 import { formatDate } from '@/filters'
@@ -86,13 +86,13 @@ export default {
     }
   },
   created() {
-    this.getEmployeesList()
+    this.getEmployeeList()
   },
   methods: {
     // 获取页面数据
-    async getEmployeesList() {
+    async getEmployeeList() {
       this.loading = true
-      const result = await getEmployeesList(this.page)
+      const result = await getEmployeeList(this.page)
       this.employeesList = result.rows
       this.page.total = result.total
       this.loading = false
@@ -101,7 +101,7 @@ export default {
     handleCurrentChange(val) {
       this.page.page = val
       // 更新前端页面
-      this.getEmployeesList()
+      this.getEmployeeList()
     },
     // 格式化聘用形式
     formatEmployment(cellValue) {
@@ -144,7 +144,7 @@ export default {
       // 懒加载对应的工具
       import('@/vendor/Export2Excel').then(async excel => {
         // 获取所有员工信息
-        const { rows } = await getEmployeesList({ page: 1, size: this.page.total })
+        const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
         const data = this.formatJson(headers, rows)
         // 添加复杂表头
         const multiHeader = [['姓名', '主要信息', '', '', '', '', '部门']]

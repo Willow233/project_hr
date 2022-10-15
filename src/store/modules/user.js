@@ -38,7 +38,7 @@ const actions = {
     const result = await getInfo()
     const baseInfo = await getUserDetailById(result.userId)
     context.commit('setUserInfo', { ...result, ...baseInfo })
-    return result // ??? 权限需要
+    return result // 权限需要
   },
   logout(context) {
     context.commit('removeToken')

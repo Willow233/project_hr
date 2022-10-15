@@ -72,7 +72,7 @@
       </el-row>
     </el-form>
     <!-- 基础信息 -->
-    <el-form label-width="220px">
+    <el-form :model="formData" label-width="220px">
       <div class="block">
         <div class="title">基础信息</div>
         <el-form-item label="最高学历">
