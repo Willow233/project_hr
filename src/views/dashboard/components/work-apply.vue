@@ -25,8 +25,7 @@ export default {
           cardTitle: '工时统计',
           icon: 'el-icon-s-data',
           color: '#08AEEA',
-          image: 'linear-gradient(0deg, #08AEEA 0%, #2AF598 100%)'
-
+          image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)'
         },
         {
           cardTitle: '请假调休',
