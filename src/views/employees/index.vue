@@ -53,7 +53,7 @@
       </el-card>
     </div>
     <!-- 添加员工弹出窗口 -->
-    <add-employee ref="addEmployee" :show-dialog.sync="showDialog" :get-employee-list="getEmployeeList" />
+    <add-employee ref="addEmployee" :show-dialog.sync="showDialog" @getEmployeeList="getEmployeeList" />
     <!-- 分配角色弹出窗口 -->
     <assign-role ref="assignRole" :show-role-dialog.sync="showRoleDialog" :user-id="userId" />
   </div>
@@ -96,15 +96,16 @@ export default {
       this.employeesList = result.rows
       this.page.total = result.total
       this.loading = false
+      console.log('页面刷新')
     },
     // 监听页面更新
     handleCurrentChange(val) {
       this.page.page = val
       // 更新前端页面
-      this.getEmployeeList()
+      this.getEmployeeList(this.page)
     },
     // 格式化聘用形式
-    formatEmployment(cellValue) {
+    formatEmployment(row, column, cellValue, index) {
       const obj = EmployeeEnum.hireType.find(item => item.id === cellValue.formOfEmployment)
       return obj ? obj.value : '未知'
     },
@@ -118,7 +119,7 @@ export default {
             type: 'warning'
           })
         await delEmployee(id)
-        this.getEmployeeList()
+        this.getEmployeeList(this.page)
         this.$message.success('删除员工成功')
       } catch (error) {
         console.log(error)

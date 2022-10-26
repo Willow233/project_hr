@@ -56,7 +56,7 @@
 
 <script>
 import { updatePermission, addPermission, getPermissionDetail, delPermission, getPermissionList } from '@/api/permission'
-import { tranListToTreeData } from '@/utils'
+import { transListToTreeData } from '@/utils'
 export default {
   data() {
     return {
@@ -87,7 +87,7 @@ export default {
   methods: {
     // 获取权限列表
     async getPermissionList() {
-      this.list = tranListToTreeData(await getPermissionList(), '0')
+      this.list = transListToTreeData(await getPermissionList(), '0')
     },
     // 删除操作
     async delPermission(id) {

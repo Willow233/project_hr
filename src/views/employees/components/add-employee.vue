@@ -47,9 +47,9 @@
 </template>
 
 <script>
-import { addNewEmployee, getBasicInfo } from '@/api/employees'
+import { addEmployee } from '@/api/employees'
 import { getDepartments } from '@/api/departments'
-import { tranListToTreeData } from '@/utils'
+import { transListToTreeData } from '@/utils'
 import EmployeeEnum from '@/api/constant/employees'
 export default {
   props: {
@@ -85,32 +85,27 @@ export default {
       loading: false
     }
   },
-  created() {
-    this.getEmployeeInfo()
-  },
   methods: {
     async getDepartments() {
       this.showTree = true
       this.loading = true
       const result = await getDepartments()
-      this.treeData = tranListToTreeData(result.depts, '')
+      this.treeData = transListToTreeData(result.depts, '')
       this.loading = false
     },
     selectNode(node) {
       this.employeeForm.departmentName = node.name
       this.showTree = false
     },
-
-    async getEmployeeInfo(id) {
-      this.employeeForm = await getBasicInfo(id)
-    },
     async btnOK() {
       try {
         await this.$refs.employeeForm.validate() // 校验成功
-        await addNewEmployee(this.employeeForm) // 调用新增接口
+        await addEmployee(this.employeeForm) // 调用新增接口
         // 调用父组件方法 更新前端页面数据
         this.$emit('getEmployeeList')
-        // 方法二 this.$parent.getEmployeesList && this.$parent.getEmployeesList() 直接调用父组件的更新方法(不常用)
+        // 方法二
+        // this.$parent.getEmployeeList && this.$parent.getEmployeeList()
+        //  直接调用父组件的更新方法(不常用)
         // 关闭窗口
         this.btnCancel()
       } catch (error) {

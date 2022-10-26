@@ -28,7 +28,7 @@
 <script>
 import { assignRoles } from '@/api/employees'
 import { getPermissionList } from '@/api/permission'
-import { tranListToTreeData } from '@/utils'
+import { transListToTreeData } from '@/utils'
 import { getRole } from '@/api/setting.js'
 export default {
   props: {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     async getPermissionList() {
-      this.permData = tranListToTreeData(await getPermissionList(), '0')
+      this.permData = transListToTreeData(await getPermissionList(), '0')
     },
     async getPermId(id) {
       this.currentId = id

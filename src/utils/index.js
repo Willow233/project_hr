@@ -119,11 +119,12 @@ export function param2Obj(url) {
 /*
  运用递归算法 将列表型数据转换为树形数据
 */
-export function tranListToTreeData(list, rootValue) {
+// 加s transListToTreeData
+export function transListToTreeData(list, rootValue) {
   const arr = []
   list.forEach(item => {
     if (item.pid === rootValue) {
-      const children = tranListToTreeData(list, item.id)
+      const children = transListToTreeData(list, item.id)
       if (children.length) {
         // children.length长度大于0  表示有子节点
         item.children = children // 添加子节点

@@ -24,7 +24,7 @@ export function delEmployee(id) {
 }
 
 // 新增员工
-export function addNewEmployee(data) {
+export function addEmployee(data) {
   return request({
     url: '/sys/user',
     method: 'post',
@@ -67,7 +67,7 @@ export function getPersonalDetail(id) {
 // 保存员工详细基础信息
 export function updatePersonal(data) {
   return request({
-    url: `/employees/${data.id}/personalInfo`,
+    url: `/employees/${data.userId}/personalInfo`,
     method: 'put',
     data
   })
@@ -92,7 +92,7 @@ export function updateJob(data) {
 // 保存用户角色信息
 export function assignRoles(data) {
   return request({
-    url: `/sys/role/assignPrem`,
+    url: `/sys/role/assignRoles`,
     method: 'put',
     data
   })

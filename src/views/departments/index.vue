@@ -30,7 +30,7 @@
 import TreeTools from './components/tree-tool.vue'
 import AddDept from './components/add-dept.vue'
 import { getDepartments } from '@/api/departments.js'
-import { tranListToTreeData } from '@/utils/index'
+import { transListToTreeData } from '@/utils/index'
 
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   methods: {
     async getDepartments() {
       const result = await getDepartments()
-      this.departs = tranListToTreeData(result.depts, '')
+      this.departs = transListToTreeData(result.depts, '')
     },
     addDepts(node) {
       this.showDialog = true // 显示增加子部门弹窗

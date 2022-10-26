@@ -54,8 +54,10 @@ export default {
     // 获取当前用户的角色
     // 父组件调用该方法
     async getUserDetailById(id) {
-      const { roleIds } = await getUserDetailById(id) // 这里不能直接用this.userId 因为props传值是异步的 此时可能还没获取到userId值
-      this.roleIds = roleIds
+      if (id) {
+        const { roleIds } = await getUserDetailById(id) // 这里不能直接用this.userId 因为props传值是异步的 此时可能还没获取到userId值
+        this.roleIds = roleIds
+      }
     },
     async btnOk() {
       // 提交表单
