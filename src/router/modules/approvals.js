@@ -7,7 +7,7 @@ export default {
   children: [
     {
       path: '',
-      component: () => import('@/views/approvals'),
+      component: () => import('@/views/approvals/index.vue'),
       name: 'approvals',
       meta: {
         title: '审批',
@@ -15,7 +15,7 @@ export default {
       }
     },
     {
-      path: 'salaryApproval/:id',
+      path: 'salaryApproval/:id?',
       component: () => import('@/views/approvals/salary'),
       name: 'salaryApproval',
       hidden: true,
@@ -24,7 +24,7 @@ export default {
         icon: 'approval', noCache: true }
     },
     {
-      path: 'enterApproval/:id',
+      path: 'enterApproval/:id?',
       component: () => import('@/views/approvals/enter'),
       name: 'enterApproval',
       hidden: true,
@@ -33,7 +33,7 @@ export default {
         icon: 'approval', noCache: true }
     },
     {
-      path: 'leaveApproval/:id',
+      path: 'leaveApproval/:id?',
       component: () => import('@/views/approvals/leave'),
       name: 'leaveApproval',
       hidden: true,
@@ -42,7 +42,7 @@ export default {
         icon: 'approval', noCache: true }
     },
     {
-      path: 'quitApproval/:id',
+      path: 'quitApproval/:id?',
       component: () => import('@/views/approvals/quit'),
       name: 'quitApproval',
       hidden: true,
@@ -51,7 +51,7 @@ export default {
         icon: 'approval', noCache: true }
     },
     {
-      path: 'overtimeApproval/:id',
+      path: 'overtimeApproval/:id?',
       component: () => import('@/views/approvals/overtime'),
       name: 'overtimeApproval',
       hidden: true,

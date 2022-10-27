@@ -383,7 +383,9 @@ export default {
     },
     async getPersonalDetail() {
       this.formData = await getPersonalDetail(this.userId) // 获取员工数据
-      this.$refs.myStaffPhoto.fileList = [{ url: this.userInfo.staffPhoto, upload: true }]
+      if (this.formData.staffPhoto && this.formData.staffPhoto.trim()) {
+        this.$refs.myStaffPhoto.fileList = [{ url: this.formData.staffPhoto, upload: true }]
+      }
     },
     async savePersonal() {
       const fileList = this.$refs.myStaffPhoto.fileList // 数组

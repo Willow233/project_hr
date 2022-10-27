@@ -12,7 +12,7 @@
       <!-- 放置表格和分页 -->
       <el-card>
         <el-table v-loading="loading" border :data="employeesList">
-          <el-table-column label="序号" sortable type="index" />
+          <el-table-column label="序号" sortable type="index" width="50px" align="center" />
           <el-table-column label="姓名" sortable prop="username" />
           <el-table-column label="工号" sortable prop="workNumber" />
           <el-table-column label="聘用形式" sortable prop="formOfEmployment" :formatter="formatEmployment" />
@@ -23,13 +23,14 @@
               {{ row.timeOfEntry | formatDate }}
             </template>
           </el-table-column>
-          <el-table-column label="账户状态" sortable prop="enableState">
+          <el-table-column label="账户状态" sortable prop="enableState" align="center">
             <template v-slot="{ row }">
               <!-- 根据当前状态来确定 是否打开开关 -->
-              <el-switch :value="row.enableState === 1" />
+              <i v-if="row.enableState === 1" class="el-icon-success" style="color:green;" />
+              <i v-if="row.enableState !== 1" class="el-icon-error" style="color:red;" />
             </template>
           </el-table-column>
-          <el-table-column label="操作" sortable fixed="right" width="280">
+          <el-table-column label="操作" sortable fixed="right" width="240px">
             <template v-slot="{row}">
               <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}?`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
@@ -105,7 +106,7 @@ export default {
       this.getEmployeeList(this.page)
     },
     // 格式化聘用形式
-    formatEmployment(row, column, cellValue, index) {
+    formatEmployment(cellValue) {
       const obj = EmployeeEnum.hireType.find(item => item.id === cellValue.formOfEmployment)
       return obj ? obj.value : '未知'
     },

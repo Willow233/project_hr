@@ -9,7 +9,11 @@
       <div>
         <el-card :style="{ 'background': item.color, 'background-image':item.image }">
           <i :class="`${item.icon}`" class="icon-style" />
-          <el-button class="order-title" type="text">{{ item.cardTitle }}</el-button>
+          <el-button
+            class="order-title"
+            type="text"
+            @click="$router.push(item.link)"
+          >{{ item.cardTitle }}</el-button>
         </el-card>
       </div>
     </el-col>
@@ -17,6 +21,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -25,29 +30,46 @@ export default {
           cardTitle: '工时统计',
           icon: 'el-icon-s-data',
           color: '#08AEEA',
-          image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)'
+          image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)',
+          link: ''
         },
         {
           cardTitle: '请假调休',
           icon: 'el-icon-star-on',
           color: ' #74EBD5',
-          image: 'linear-gradient(225deg, #74EBD5 0%, #9FACE6 100%)'
+          image: 'linear-gradient(225deg, #74EBD5 0%, #9FACE6 100%)',
+          link: ''
         },
         {
           cardTitle: '审批列表',
           icon: 'el-icon-s-order',
           color: '#ffd82a',
-          image: 'linear-gradient(225deg, #ffd82a 0%, #38d2ad 100%)'
+          image: 'linear-gradient(225deg, #ffd82a 0%, #38d2ad 100%)',
+          link: '/users/approvals'
         },
         {
           cardTitle: '我的信息',
           icon: 'el-icon-user-solid',
           color: '#FBAB7E',
-          image: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)'
+          image: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
+          link: '/users/info'
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
   }
+  /* created() {
+    this.getId()
+  },
+  methods: {
+    getId() {
+      this.countData[3].link = `/employees/detail/${this.userId}`
+    }
+  } */
 }
 </script>
 

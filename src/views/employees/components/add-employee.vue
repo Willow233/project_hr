@@ -106,6 +106,7 @@ export default {
         // 方法二
         // this.$parent.getEmployeeList && this.$parent.getEmployeeList()
         //  直接调用父组件的更新方法(不常用)
+        this.$message.success('添加用户成功')
         // 关闭窗口
         this.btnCancel()
       } catch (error) {

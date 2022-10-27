@@ -61,7 +61,12 @@ export default {
     },
     async btnOk() {
       // 提交表单
-      await assignRoles({ id: this.userId, permIds: this.roleIds })
+      try {
+        await assignRoles({ id: this.userId, roleIds: this.roleIds })
+      } catch (error) {
+        console.log(error)
+      }
+      this.$message.success('保存用户角色信息成功')
       // 关闭窗口
       this.btnCancel()
     },
