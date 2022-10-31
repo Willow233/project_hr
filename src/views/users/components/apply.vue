@@ -84,11 +84,11 @@ import { startProcess } from '@/api/approvals'
 import commonApi from '@/api/constant/user'
 export default {
   name: 'UsersTableIndex',
-  props: ['dialogVisible'],
+  // props: ['dialogVisible'],
   data() {
     return {
       dialogImageUrl: '',
-      dialogVisibles: false,
+      // dialogVisibles: true,
       value: '加班',
       opType: 15,
       ruleForm: {

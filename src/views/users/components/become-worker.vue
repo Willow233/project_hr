@@ -1,7 +1,7 @@
 <template>
   <div class="BecomeARegularWorker">
     <div class="infoBox">
-      <div class="logo"><img src="./../../assets/img.jpeg" alt=""></div>
+      <div class="logo"><img src="../../../assets/common/defaultHead.png" alt=""></div>
       <div class="info">
         <p><span class="name">{{ ruleForm.fullName }}</span></p>
         <p><span>部门：</span> {{ ruleForm.department }}      <span>岗位：</span> {{ ruleForm.post }} </p>
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "./../../styles/variables";
+  @import "../../../styles/variables";
   .BecomeARegularWorker{
     .infoBox{
       display: flex;

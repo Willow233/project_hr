@@ -1,7 +1,7 @@
 <template>
   <div class="AdjustThePost">
     <div class="infoBox">
-      <div class="logo"><img src="./../../assets/img.jpeg" alt=""></div>
+      <div class="logo"><img src="../../../assets/common/defaultHead.png" alt=""></div>
       <div class="info">
         <p><span class="name">{{ ruleForm.fullName }}</span></p>
         <p><span>部门：</span> {{ ruleForm.department }}      <span>岗位：</span> {{ ruleForm.post }}</p>
@@ -14,7 +14,7 @@
           <span v-if="item.oldValue != ''"><el-input v-model="item.oldValue" style="width: 220px;" /><span class="Label">-></span><el-input v-model="item.newValue" style="width: 220px;" /></span>
           <span v-if="item.title == '调岗时间'"><el-input v-model="item.newValue" style="width: 220px;" /></span>
           <span v-if="item.title == '调岗原因'"><el-input v-model="item.newValue" style="width: 220px;" /></span>
-          <span v-if="item.type == 'img'"><img src="./../../assets/404_images/404.png" width="300" alt=""></span>
+          <span v-if="item.type == 'img'"><img src="../../../assets/404_images/404.png" width="300" alt=""></span>
         </el-form-item>
         <div class="buttones" style="text-align: center;margin-top: 40px;">
           <el-form-item>
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       dialogImageUrl: '',
-      dialogVisible: false,
+      dialogVisible: true,
       timeValue: '',
       ruleForm: {
         fullName: '张三',
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "./../../styles/variables";
+  @import "../../../styles/variables";
   .AdjustThePost{
     .infoBox{
       display: flex;

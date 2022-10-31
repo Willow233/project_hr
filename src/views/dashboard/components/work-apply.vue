@@ -27,18 +27,18 @@ export default {
     return {
       countData: [
         {
-          cardTitle: '工时统计',
+          cardTitle: '请假调休',
           icon: 'el-icon-s-data',
           color: '#08AEEA',
           image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)',
-          link: ''
+          link: '/users/leave-relevant'
         },
         {
-          cardTitle: '请假调休',
+          cardTitle: '加班离职',
           icon: 'el-icon-star-on',
           color: ' #74EBD5',
           image: 'linear-gradient(225deg, #74EBD5 0%, #9FACE6 100%)',
-          link: ''
+          link: '/users/apply'
         },
         {
           cardTitle: '审批列表',

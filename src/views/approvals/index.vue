@@ -5,11 +5,7 @@
       <page-tools :show-before="true">
         <!-- 前面内容 -->
         <span slot="before">当前审批中 0 本月审批通过 1 本月审批驳回 0</span>
-        <template slot="after">
-          <el-button size="mini" type="primary" @click="$router.push('/approvals/securitySetting')">流程设置</el-button>
-        </template>
       </page-tools>
-      <!-- <ApprovalPageTool /> -->
       <el-card class="hr-block">
         <el-table :data="list" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
           <el-table-column type="selection" width="30" />
@@ -65,11 +61,9 @@
 
 <script>
 import { getApprovalList } from '@/api/approvals'
-// import ApprovalPageTool from './components/approval-tool'
 
 export default {
   name: 'SocialTableIndex',
-  components: { },
   data() {
     return {
       list: [],
