@@ -10,63 +10,28 @@
           <el-button size="mini" type="primary" @click="$router.push(`/salarys/monthStatement?yearMonth=${yearMonth}`)">{{ yearMonth }}报表</el-button>
         </template>
       </page-tools>
-      <!-- 条件筛选 -->
       <el-card class="hr-block">
-        <el-form label-width="120px">
-          <el-form-item label="聘用形式:">
-            <el-checkbox-group v-model="formData.approvalsTypeChecks">
-              <el-checkbox
-                v-for="item in approvalsType"
-                :key="item.id"
-                :label="item.id"
-                @change="changeParams"
-              >{{ item.value }}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="员工状态:">
-            <el-checkbox-group v-model="formData.approvalsStateChecks">
-              <el-checkbox
-                v-for="item in approvalsState"
-                :key="item.id"
-                :label="item.id"
-                @change="changeParams"
-              >{{ item.value }}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="部门:">
-            <el-checkbox-group v-model="formData.departmentChecks">
-              <el-checkbox
-                v-for="item in departments"
-                :key="item.id"
-                :label="item.id"
-                @change="changeParams"
-              >{{ item.name }}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-        </el-form>
-      </el-card>
-      <el-card class="hr-block">
-        <el-table :data="list" style="width: 100%">
-          <el-table-column type="index" label="序号" width="60" />
-          <el-table-column prop="username" label="姓名" width="100" />
-          <el-table-column prop="mobile" label="手机" width="130" />
-          <el-table-column prop="workNumber" label="工号" width="100" />
-          <el-table-column prop="formOfEmployment" :formatter="formatEmployment" width="100" label="聘用形式" />
-          <el-table-column prop="departmentName" label="部门" width="100" />
-          <el-table-column prop="timeOfEntry" width="130" label="入职时间">
+        <el-table v-loading="loading" :data="list" border>
+          <el-table-column type="index" label="序号" width="50" align="center" />
+          <el-table-column prop="username" label="姓名" />
+          <el-table-column prop="mobile" label="手机" />
+          <el-table-column prop="workNumber" label="工号" />
+          <el-table-column prop="formOfEmployment" :formatter="formatEmployment" label="聘用形式" />
+          <el-table-column prop="departmentName" label="部门" />
+          <el-table-column prop="timeOfEntry" label="入职时间">
             <template v-slot:default="obj">
               {{
                 obj.row.timeOfEntry | formatDate
               }}
             </template>
           </el-table-column>
-          <el-table-column label="工资基数" width="100">
+          <el-table-column label="工资基数">
             <template slot-scope="scope">
               {{ scope.row.currentBasicSalary + scope.row.currentPostWage }}
             </template>
           </el-table-column>
-          <el-table-column label="津贴方案" width="100">通用方案</el-table-column>
-          <el-table-column label="操作" width="260">
+          <el-table-column label="津贴方案">通用方案</el-table-column>
+          <el-table-column label="操作" width="260" align="center">
             <template slot-scope="scope" style>
               <el-button
                 v-if="scope.row.currentBasicSalary + scope.row.currentPostWage > 0 "
@@ -86,16 +51,14 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-row type="flex" justify="center" style="height: 50px" align="middle">
+        <el-row type="flex" justify="center" style="height: 60px" align="middle">
           <el-pagination
-            background
             layout="prev,pager,next"
             :total="page.total"
             :current-page="page.page"
             :page-size="page.pageSize"
             @current-change="changePage"
           />
-
         </el-row>
       </el-card>
       <!--查看弹框-->
@@ -131,15 +94,10 @@ export default {
       page: {
         total: 0,
         page: 1,
-        pageSize: 10
+        pageSize: 6
       },
       tips: {},
       yearMonth: '',
-      formData: {
-        approvalsTypeChecks: [],
-        approvalsStateChecks: [],
-        departmentChecks: []
-      },
       selectedSalaryInfo: {},
       selectUserId: null,
       currentComponent: ''
@@ -195,12 +153,8 @@ export default {
       this.topLabel = '定薪'
       this.currentComponent = key
       this.centerDialogVisible = true
-    },
-    // 查询参数发生变化
-    changeParams() {
-      this.page.page = 1 // 重置第一页
-      this.getSalarysList() // 重新拉取工资数据
     }
+
   }
 }
 </script>

@@ -1,81 +1,87 @@
 <template>
-  <div class="usersContainer">
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      status-icon
-      label-width="110px"
-      class="demo-ruleForm"
-      enctype="multipart/form-data"
-    >
-      <el-form-item label="申请类型">
-        <el-select v-model="opType" placeholder="请选择" style="width: 220px;" @change="handleChange">
-          <el-option
-            v-for="item in baseData.applyType"
-            :key="item.id"
-            :label="item.value"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
-      <!--离职表单-->
-      <div v-if="state==3">
-        <el-form-item label="期望离职时间" :class="computeOpType?'item-enable':'item-dismiss'" prop="exceptTime">
-          <el-date-picker
-            v-model="ruleForm.exceptTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期"
-          />
-        </el-form-item>
-        <el-form-item label="离职原因" :class="computeOpType?'item-enable':'item-dismiss'" prop="">
-          <el-input
-            v-model="ruleForm.reason"
-            type="textarea"
-            :autosize="{ minRows: 3, maxRows: 8}"
-            style="width: 70%;"
-            placeholder="请输入内容"
-          />
-        </el-form-item>
-      </div>
-      <!--离职表单-->
-      <!--加班表单-->
-      <div :v-else-if="state==15">
-        <el-form-item label="加班开始时间" :class="computeOpType?'item-dismiss':'item-enable'" prop="start_time">
-          <el-date-picker
-            v-model="ruleForm.start_time"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-          />
-        </el-form-item>
-        <el-form-item label="加班结束时间" :class="computeOpType?'item-dismiss':'item-enable'" prop="end_time">
-          <el-date-picker
-            v-model="ruleForm.end_time"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期时间"
-          />
-        </el-form-item>
-        <el-form-item label="补偿方式" :class="computeOpType?'item-dismiss':'item-enable'">
-          <span>调休</span>
-        </el-form-item>
-        <el-form-item label="加班原因" :class="computeOpType?'item-dismiss':'item-enable'" prop="reason">
-          <el-input
-            v-model="ruleForm.reason"
-            type="textarea"
-            :autosize="{ minRows: 3, maxRows: 8}"
-            style="width: 70%;"
-            placeholder="请输入内容"
-          />
-        </el-form-item>
-      </div>
-      <!--加班表单-->
-      <el-form-item>
-        <el-button @click="submitForm('ruleForm')">提交</el-button>
-        <el-button @click="resetForm">重置</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="dashboard-container">
+    <div class="app-container">
+      <el-card>
+        <div class="usersContainer">
+          <el-form
+            ref="ruleForm"
+            :model="ruleForm"
+            status-icon
+            label-width="110px"
+            class="demo-ruleForm"
+            enctype="multipart/form-data"
+          >
+            <el-form-item label="申请类型">
+              <el-select v-model="opType" placeholder="请选择" style="width: 220px;" @change="handleChange">
+                <el-option
+                  v-for="item in baseData.applyType"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <!--离职表单-->
+            <div v-if="state==3">
+              <el-form-item label="期望离职时间" :class="computeOpType?'item-enable':'item-dismiss'" prop="exceptTime">
+                <el-date-picker
+                  v-model="ruleForm2.exceptTime"
+                  type="date"
+                  value-format="yyyy-MM-dd"
+                  placeholder="选择日期"
+                />
+              </el-form-item>
+              <el-form-item label="离职原因" :class="computeOpType?'item-enable':'item-dismiss'" prop="">
+                <el-input
+                  v-model="ruleForm2.reason"
+                  type="textarea"
+                  :autosize="{ minRows: 3, maxRows: 8}"
+                  style="width: 70%;"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </div>
+            <!--离职表单-->
+            <!--加班表单-->
+            <div :v-else-if="state==15">
+              <el-form-item label="加班开始时间" :class="computeOpType?'item-dismiss':'item-enable'" prop="start_time">
+                <el-date-picker
+                  v-model="ruleForm.start_time"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间"
+                />
+              </el-form-item>
+              <el-form-item label="加班结束时间" :class="computeOpType?'item-dismiss':'item-enable'" prop="end_time">
+                <el-date-picker
+                  v-model="ruleForm.end_time"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期时间"
+                />
+              </el-form-item>
+              <el-form-item label="补偿方式" :class="computeOpType?'item-dismiss':'item-enable'">
+                <span>调休</span>
+              </el-form-item>
+              <el-form-item label="加班原因" :class="computeOpType?'item-dismiss':'item-enable'" prop="reason">
+                <el-input
+                  v-model="ruleForm.reason"
+                  type="textarea"
+                  :autosize="{ minRows: 3, maxRows: 8}"
+                  style="width: 70%;"
+                  placeholder="请输入内容"
+                />
+              </el-form-item>
+            </div>
+            <!--加班表单-->
+            <el-form-item>
+              <el-button @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -84,14 +90,18 @@ import { startProcess } from '@/api/approvals'
 import commonApi from '@/api/constant/user'
 export default {
   name: 'UsersTableIndex',
-  // props: ['dialogVisible'],
   data() {
     return {
       dialogImageUrl: '',
-      // dialogVisibles: true,
       value: '加班',
       opType: 15,
       ruleForm: {
+        start_time: '',
+        end_time: '',
+        reason: '',
+        processKey: 'process_overtime',
+        processName: '加班',
+        userId: this.$store.getters.userId
 
       },
       ruleForm2: {

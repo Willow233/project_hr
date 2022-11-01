@@ -52,7 +52,7 @@ export default {
           icon: 'el-icon-user-solid',
           color: '#FBAB7E',
           image: 'linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%)',
-          link: '/users/info'
+          link: ''
         }
       ]
     }
@@ -61,15 +61,15 @@ export default {
     ...mapGetters([
       'userId'
     ])
-  }
-  /* created() {
+  },
+  created() {
     this.getId()
   },
   methods: {
     getId() {
       this.countData[3].link = `/employees/detail/${this.userId}`
     }
-  } */
+  }
 }
 </script>
 

@@ -1,46 +1,40 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
+      <!-- 靠右的按钮 -->
+      <!-- 新增角色按钮 -->
+      <page-tools>
+        <template v-slot:after>
+          <el-button size="small" type="primary" plain @click="editRole()">新增角色</el-button>
+        </template>
+      </page-tools>
       <el-card>
-        <el-tabs>
-          <!-- 放置页签 -->
-          <el-tab-pane label="角色管理">
-            <!-- 新增角色按钮 -->
-            <el-row style="height:60px">
-              <el-button
-                icon="el-icon-plus"
-                size="small"
-                type="primary"
-                @click="editRole()"
-              >新增角色</el-button>
-            </el-row>
-            <!-- 表格 -->
-            <el-table :data="roleList">
-              <el-table-column label="序号" width="120" type="index" align="center" />
-              <el-table-column label="角色名称" width="240" prop="name" />
-              <el-table-column label="描述" prop="description" />
-              <el-table-column label="操作">
-                <!-- 作用域插槽 -->
-                <template slot-scope="scope">
-                  <el-button size="small" type="primary" @click="editRole(scope.row.id)">编辑</el-button>
-                  <el-button size="small" type="danger" @click="delRole(scope.row.id)">删除</el-button>
-                  <el-button size="small" type="success" @click="assignRole(scope.row.id)">分配权限</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-            <!-- 分页组件 -->
-            <el-row type="flex" justify="center" align="middle" style="height: 60px">
-              <!-- 分页组件 -->
-              <el-pagination
-                layout="prev,pager,next"
-                :current-page="page.page"
-                :total="page.total"
-                :page-size="page.pagesize"
-                @current-change="handleCurrentChange"
-              />
-            </el-row>
-          </el-tab-pane>
-        </el-tabs>
+        <!-- 表格 -->
+        <el-table :data="roleList" border>
+          <el-table-column label="序号" width="50" type="index" align="center" />
+          <el-table-column label="角色名称" width="240" prop="name" align="center" />
+          <el-table-column label="描述" prop="description" align="center" />
+          <el-table-column label="操作" align="center" width="240px">
+            <!-- 作用域插槽 -->
+            <template slot-scope="scope">
+              <el-button type="text" @click="editRole(scope.row.id)">编辑</el-button>
+              <el-button type="text" @click="delRole(scope.row.id)">删除</el-button>
+              <el-button type="text" @click="assignRole(scope.row.id)">分配权限</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <!-- 分页组件 -->
+        <el-row type="flex" justify="center" align="middle" style="height: 60px">
+          <!-- 分页组件 -->
+          <el-pagination
+            layout="prev,pager,next"
+            :current-page="page.page"
+            :total="page.total"
+            :page-size="page.pagesize"
+            @current-change="handleCurrentChange"
+          />
+        </el-row>
+
       </el-card>
     </div>
     <!-- 添加角色 -->

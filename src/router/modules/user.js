@@ -26,33 +26,14 @@ export default {
       }
     },
     {
-      path: '/users/adjust-post',
-      component: () => import('@/views/users/components/adjust-post'),
-      name: 'adjust-post',
-      hidden: true,
-      meta: {
-        title: '调岗'
-      }
-    },
-    {
       path: '/users/apply',
       component: () => import('@/views/users/components/apply'),
       name: 'myApply',
       hidden: true,
       meta: {
-        title: '申请'
+        title: '加班离职'
       }
     },
-    {
-      path: '/users/become-worker',
-      component: () => import('@/views/users/components/become-worker'),
-      name: 'become-worker',
-      hidden: true,
-      meta: {
-        title: '转正'
-      }
-    },
-
     {
       path: '/users/leave-relevant',
       component: () => import('@/views/users/components/leave-relevant'),

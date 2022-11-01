@@ -169,7 +169,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-// @import "../../../styles/variables";
+@import "../../../styles/variables";
 .AdjustThePost {
   .infoBox {
     display: flex;

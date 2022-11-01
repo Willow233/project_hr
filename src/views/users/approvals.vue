@@ -120,8 +120,7 @@
     </div>
     <!--查看弹框-->
     <el-dialog :title="topLabel" :visible.sync="centerDialogVisible" width="50%" left>
-      <!-- <BecomeARegularWorker v-show="seeState == 'becomeARegularWorker'" /> -->
-      <!-- <AdjustThePost v-show="seeState == 'adjustThePost'" /> -->
+
       <Quit
         v-show="seeState == 'quit'"
         ref="quit"
@@ -129,7 +128,6 @@
         :tab-lab="tagName"
         @closeDialog="closeDialog"
       />
-      <!-- <Examine v-show="seeState == 'examine'" /> -->
       <Leave
         v-show="seeState == 'leave'"
         ref="leave"
@@ -144,7 +142,6 @@
         :tab-lab="tagName"
         @closeDialog="closeDialog"
       />
-    <!-- <Employment v-show="seeState == 'employment'" /> -->
     </el-dialog>
     <!--查看弹框-->
     <!-- 通过审核 -->
@@ -324,16 +321,10 @@ export default {
           this.selectedId = id
           this.$refs.quit.updateData()
           break
-        case '审核':
-          this.seeState = 'examine'
-          break
         case '加班':
           this.seeState = 'overtime'
           this.selectedId = id
           this.$refs.overtime.updateData()
-          break
-        case '录用':
-          this.seeState = 'employment'
           break
         case '请假':
           this.seeState = 'leave'

@@ -7,39 +7,12 @@
         <template v-slot:before>有 {{ attendInfo.tobeTaskCount }} 条考勤审批尚未处理</template>
         <template v-slot:after>
           <el-button size="mini" type="danger" @click="$router.push('/import?type=attendance')">导入</el-button>
-          <el-button size="mini" type="warning">提醒</el-button>
+          <el-button size="mini" type="warning" @click="handleTip">提醒</el-button>
           <el-button size="mini" type="primary" @click="handleSet">设置</el-button>
           <el-button size="mini" type="default" @click="$router.push('/attendances/archiving/')">历史归档</el-button>
           <el-button size="mini" type="primary" @click="$router.push({'path':'/attendances/report/'+ yearMonth})">{{ yearMonth }}报表</el-button>
         </template>
       </page-tools>
-      <el-card class="hr-block">
-        <el-form ref="formData" :model="formData" label-width="120px" class="formInfo">
-          <el-form-item label="部门:">
-            <el-checkbox-group v-model="formData.deptID">
-              <el-checkbox
-                v-for="item in departments"
-                :key="item.id"
-                :label="item.name"
-              >
-                {{ item.name }}
-              </el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="考勤状态：">
-            <el-radio-group v-model="formData.stateID">
-              <el-radio
-                v-for="item in stateData.holidayType"
-                :key="item.id"
-                :label="item.value"
-                :value="item.value"
-              >
-                {{ item.value }}
-              </el-radio>
-            </el-radio-group>
-          </el-form-item>
-        </el-form>
-      </el-card>
       <!-- 考勤数据 -->
       <el-card class="hr-block">
         <!-- 考勤列表 -->
@@ -206,8 +179,8 @@ export default {
   methods: {
     // 暂时不处理
     handleSub() {
-      this.tipsDialogVisible = false
       this.$message.success('提醒成功')
+      this.tipsDialogVisible = false
     },
     handleTip() {
       this.tipsDialogVisible = true

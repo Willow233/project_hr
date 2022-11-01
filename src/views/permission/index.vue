@@ -4,24 +4,27 @@
       <!-- 靠右的按钮 -->
       <page-tools>
         <template v-slot:after>
-          <el-button type="primary" size="small" @click="addPermission(1,'0')">添加权限</el-button>
+          <el-button type="primary" size="small" plain @click="addPermission(1,'0')">添加权限</el-button>
         </template>
       </page-tools>
       <!-- 表格 -->
-      <el-table :title="showText" border :data="list" row-key="id">
-        <el-table-column label="名称" prop="name" />
-        <el-table-column label="标识" prop="code" />
-        <!-- Todo 优化一级 标识改为下拉菜单栏 和 路由的命名相对应 -->
-        <el-table-column label="描述" prop="description" />
-        <el-table-column label="操作">
-          <template v-slot="{row}">
-            <el-button v-if="row.type === 1" type="text" @click="addPermission(2,row.id)">添加</el-button>
-            <el-button type="text" @click="editPermission(row.id)">编辑</el-button>
-            <el-button type="text" @click="delPermission(row.id)">删除</el-button>
-          </template>
-        </el-table-column>
+      <el-card>
+        <el-table :title="showText" border :data="list" row-key="id">
+          <el-table-column label="序号" sortable type="index" width="50px" align="center" />
+          <el-table-column label="名称" prop="name" align="center" />
+          <el-table-column label="标识" prop="code" align="center" />
+          <!-- Todo 优化一级 标识改为下拉菜单栏 和 路由的命名相对应 -->
+          <el-table-column label="描述" prop="description" align="center" />
+          <el-table-column label="操作" align="center" width="240px">
+            <template v-slot="{row}">
+              <el-button v-if="row.type === 1" type="text" @click="addPermission(2,row.id)">添加</el-button>
+              <el-button type="text" @click="editPermission(row.id)">编辑</el-button>
+              <el-button type="text" @click="delPermission(row.id)">删除</el-button>
+            </template>
+          </el-table-column>
 
-      </el-table>
+        </el-table>
+      </el-card>
     </div>
     <!-- 新增编辑弹层 -->
     <el-dialog :visible="showDialog" @close="btnCancel">

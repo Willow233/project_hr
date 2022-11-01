@@ -87,9 +87,9 @@ export const asyncRoutes = [
   departmentsRouter,
   employeesRouter,
   permissionRouter,
+  settingRouter,
   attendancesRouter,
   salarysRouter,
-  settingRouter,
   socialRouter
 ]
 

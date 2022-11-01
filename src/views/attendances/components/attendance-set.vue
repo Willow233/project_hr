@@ -272,7 +272,7 @@
                 </div>
                 <div v-if="scope.row.dedTypeCode==='53000'" class="attentInfo">
                   <p>
-                    旷工按
+                    矿工按
                     <el-input
                       v-model="scope.row.fineSalaryMultiples"
                       class="inputInfo"

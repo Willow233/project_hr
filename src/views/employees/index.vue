@@ -30,12 +30,9 @@
               <i v-if="row.enableState !== 1" class="el-icon-error" style="color:red;" />
             </template>
           </el-table-column>
-          <el-table-column label="操作" sortable fixed="right" width="240px">
+          <el-table-column label="操作" fixed="right" align="center">
             <template v-slot="{row}">
               <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}?`)">查看</el-button>
-              <el-button type="text" size="small" @click="$router.push('/users/become-worker')">转正</el-button>
-              <el-button type="text" size="small" @click="$router.push('/users/adjust-post')">调岗</el-button>
-              <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
@@ -142,7 +139,7 @@ export default {
         '工号': 'workNumber',
         '部门': 'departmentName'
       }
-
+      // 懒加载是一种将资源初始化推迟到需要时再加载的一种设计模式。
       // 懒加载对应的工具
       import('@/vendor/Export2Excel').then(async excel => {
         // 获取所有员工信息

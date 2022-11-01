@@ -1,68 +1,74 @@
 <template>
-  <div class="usersContainer">
-    <el-form
-      ref="ruleForm"
-      :model="ruleForm"
-      status-icon
-      label-width="110px"
-      class="demo-ruleForm"
-      enctype="multipart/form-data"
-    >
-      <el-form-item label="假期类型">
-        <el-select v-model="ruleForm.holidayType" placeholder="请选择" style="width: 220px;" @change="handleChange">
-          <el-option
-            v-for="item in baseData.leaveType"
-            :key="item.id"
-            :label="item.value"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="申请单位">
-        <span>按天</span>
-      </el-form-item>
-      <el-form-item label="开始时间" prop="startTime">
-        <el-col :span="8">
-          <el-date-picker
-            v-model="ruleForm.startTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期"
-            style="width: 340px;"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item label="结束时间" prop="endTime">
-        <el-col :span="8">
-          <el-date-picker
-            v-model="ruleForm.endTime"
-            type="datetime"
-            value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="选择日期"
-            style="width: 340px;"
-          />
-        </el-col>
-      </el-form-item>
-      <el-form-item v-if="state===&quot;1&quot;" label="请假时长">
-        <el-input v-model="ruleForm.duration" style="width: 340px;" />
-      </el-form-item>
-      <el-form-item v-if="state===&quot;0&quot;" label="申请天数">
-        <el-input v-model="ruleForm.duration" style="width: 340px;" />
-      </el-form-item>
-      <el-form-item label="申请理由" prop="reason">
-        <el-input
-          v-model="ruleForm.reason"
-          type="textarea"
-          style="width: 340px;"
-          :autosize="{ minRows: 3, maxRows: 8}"
-          placeholder="请输入内容"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-        <el-button @click="resetForm()">重置</el-button>
-      </el-form-item>
-    </el-form>
+  <div class="dashboard-container">
+    <div class="app-container">
+      <el-card>
+        <div class="usersContainer">
+          <el-form
+            ref="ruleForm"
+            :model="ruleForm"
+            status-icon
+            label-width="110px"
+            class="demo-ruleForm"
+            enctype="multipart/form-data"
+          >
+            <el-form-item label="假期类型">
+              <el-select v-model="ruleForm.holidayType" placeholder="请选择" style="width: 220px;" @change="handleChange">
+                <el-option
+                  v-for="item in baseData.leaveType"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item label="申请单位">
+              <span>按天</span>
+            </el-form-item>
+            <el-form-item label="开始时间" prop="startTime">
+              <el-col :span="8">
+                <el-date-picker
+                  v-model="ruleForm.startTime"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期"
+                  style="width: 340px;"
+                />
+              </el-col>
+            </el-form-item>
+            <el-form-item label="结束时间" prop="endTime">
+              <el-col :span="8">
+                <el-date-picker
+                  v-model="ruleForm.endTime"
+                  type="datetime"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  placeholder="选择日期"
+                  style="width: 340px;"
+                />
+              </el-col>
+            </el-form-item>
+            <el-form-item v-if="state===&quot;1&quot;" label="请假时长">
+              <el-input v-model="ruleForm.duration" style="width: 340px;" />
+            </el-form-item>
+            <el-form-item v-if="state===&quot;0&quot;" label="申请天数">
+              <el-input v-model="ruleForm.duration" style="width: 340px;" />
+            </el-form-item>
+            <el-form-item label="申请理由" prop="reason">
+              <el-input
+                v-model="ruleForm.reason"
+                type="textarea"
+                style="width: 340px;"
+                :autosize="{ minRows: 3, maxRows: 8}"
+                placeholder="请输入内容"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button @click="resetForm()">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
