@@ -5,13 +5,6 @@
       <page-tools :show-before="true">
         <!-- 前面内容 -->
         <template v-slot:before>有 {{ attendInfo.tobeTaskCount }} 条考勤审批尚未处理</template>
-        <template v-slot:after>
-          <el-button size="mini" type="danger" @click="$router.push('/import?type=attendance')">导入</el-button>
-          <el-button size="mini" type="warning" @click="handleTip">提醒</el-button>
-          <el-button size="mini" type="primary" @click="handleSet">设置</el-button>
-          <el-button size="mini" type="default" @click="$router.push('/attendances/archiving/')">历史归档</el-button>
-          <el-button size="mini" type="primary" @click="$router.push({'path':'/attendances/report/'+ yearMonth})">{{ yearMonth }}报表</el-button>
-        </template>
       </page-tools>
       <!-- 考勤数据 -->
       <el-card class="hr-block">
@@ -67,6 +60,7 @@
           </div>
 
         </div>
+        <!-- 考勤修改 -->
         <el-dialog
           :visible.sync="centerDialogVisible"
           width="30%"
@@ -102,48 +96,30 @@
         </el-row>
       </el-card>
     </div>
-    <el-card>
-      <!-- 提醒组件 -->
-      <el-dialog
-        title="提醒"
-        :visible.sync="tipsDialogVisible"
-        width="280px"
-        center
-      >
-        <div class="attenInfo">
-          <p>系统将通过邮件与短信的形式，对全体员工中存在旷工的考勤进行提醒，该提醒每月仅可发送 1 次。</p>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="handleSub">我知道了</el-button>
-          <el-button @click="centerDialogVisible = false">取消</el-button>
-        </span>
-      </el-dialog>
-      <!-- 设置组件 -->
-      <attendance-set ref="set" @handleCloseModal="handleCloseModal" /></el-card></div>
+  </div>
 </template>
 
 <script>
 import attendanceApi from '@/api/constant/attendance'
 import { getAttendancesList, updateAttendance } from '@/api/attendances'
-import AttendanceSet from './components/attendance-set'
 import { getDepartments } from '@/api/departments'
 export default {
   name: 'Attendances',
-  components: { AttendanceSet },
   data() {
     return {
+      loading: false,
       list: [],
       selectData: [],
+      // 考勤状态
       stateData: attendanceApi,
       departments: [],
       total: 100,
       attendanceRecord: '',
       monthOfReport: '',
       centerDialogVisible: false,
-      tipsDialogVisible: false,
       month: '',
       yearMonth: '',
-      loading: false,
+      // 考勤数据
       attendInfo: {
         month: '',
         getDate: '',
@@ -159,11 +135,13 @@ export default {
         deptID: [], // 性别
         stateID: ''
       },
+      // 页码
       page: {
         page: 1,
         pagesize: 10,
         total: 0
       },
+      // 修改考勤数据
       modifyData: {
         userId: '',
         day: '',
@@ -174,25 +152,9 @@ export default {
   // 创建完毕状态
   created() {
     this.getAttendancesList() // 获取考勤列表
-    this.getDepartments() // 获取考勤列表
+    this.getDepartments() // 获取考勤人员列表
   },
   methods: {
-    // 暂时不处理
-    handleSub() {
-      this.$message.success('提醒成功')
-      this.tipsDialogVisible = false
-    },
-    handleTip() {
-      this.tipsDialogVisible = true
-    },
-    // 设置
-    handleSet() {
-      this.$refs.set.dialogFormV()
-    },
-    // 弹框关闭
-    handleCloseModal() {
-      this.$refs.set.dialogFormH()
-    },
     // 获取组织列表
     async getDepartments() {
       const { depts } = await getDepartments()
@@ -202,13 +164,12 @@ export default {
     // 初始化数据
     async getAttendancesList() {
       this.loading = true
-      const { data, monthOfReport, tobeTaskCount } = await getAttendancesList({ ...this.page })
+      const { data, monthOfReport, tobeTaskCount } = await getAttendancesList(this.page)
       this.list = data.rows // 当前记录
       this.page.total = data.total // 总条数
       this.attendInfo.counts = data.total
       this.attendInfo.month = monthOfReport
       this.attendInfo.tobeTaskCount = tobeTaskCount
-
       var date = new Date()
       var year = date.getFullYear()
       const month = monthOfReport
@@ -227,7 +188,7 @@ export default {
     // 页码改变
     pageChange(page) {
       this.page.page = page
-      this.getAttendancesList() // 获取数据
+      // this.getAttendancesList() // 获取数据
     },
     showChangeDialog(item, id, it) {
       this.modifyData.userId = item.id

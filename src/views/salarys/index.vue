@@ -6,8 +6,7 @@
         <!-- 前面内容 -->
         <template v-slot:before>{{ tipsInfo }}</template>
         <template v-slot:after>
-          <el-button size="mini" type="danger" @click="$router.push('/salarys/setting')">设置</el-button>
-          <el-button size="mini" type="primary" @click="$router.push(`/salarys/monthStatement?yearMonth=${yearMonth}`)">{{ yearMonth }}报表</el-button>
+          <el-button size="small" type="primary" plain @click="$router.push('/salarys/setting')">设置</el-button>
         </template>
       </page-tools>
       <el-card class="hr-block">
@@ -62,7 +61,7 @@
         </el-row>
       </el-card>
       <!--查看弹框-->
-      <el-dialog :title="topLabel" :visible.sync="centerDialogVisible" width="50%" left>
+      <el-dialog :title="topLabel" :visible.sync="centerDialogVisible" width="700px" left>
         <component :is="currentComponent" :user-salary="selectedSalaryInfo" :user-id="selectUserId" @success="getSalarysList" @onDialogCancel="centerDialogVisible=false" />
         <!-- <ChangeSalary v-if="seeState == 'changeSalary'" :user-salary="selectedSalaryInfo" :user-id="selectUserId" @onDialogCancel="centerDialogVisible=false" /> -->
         <!-- <FixedSalary v-if="seeState == 'fixedSalary'" /> -->
@@ -72,7 +71,7 @@
 </template>
 <script>
 import { getSalarysList, getTips, getSalaryDetail, getCompanySetting } from '@/api/salarys'
-import EmployeeData from '@/api/constant/employees'
+import EmployeeEnum from '@/api/constant/employees'
 import { getDepartments } from '@/api/departments'
 import ChangeSalary from './components/change-salary'
 import FixedSalary from './components/fixed-salary'
@@ -84,8 +83,8 @@ export default {
       seeState: '',
       centerDialogVisible: false,
       topLabel: '转正',
-      approvalsType: EmployeeData.hireType,
-      approvalsState: EmployeeData.workingState,
+      approvalsType: EmployeeEnum.hireType,
+      approvalsState: EmployeeEnum.workingState,
       department: [],
       subsidyScheme: [],
       list: [],
@@ -116,8 +115,8 @@ export default {
   },
   methods: {
     // 对聘用形式进行文本显示
-    formatEmployment(row) {
-      const data = this.approvalsType.find(item => item.id === row.formOfEmployment.toString())
+    formatEmployment(cellValue) {
+      const data = this.approvalsType.find(item => item.id === cellValue.formOfEmployment)
       return data ? data.value : '未知'
     },
     async  getSalarysList() {

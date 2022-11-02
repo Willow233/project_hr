@@ -9,7 +9,6 @@ import attendancesRouter from './modules/attendances'
 import salarysRouter from './modules/salarys'
 import settingRouter from './modules/setting'
 import socialRouter from './modules/social'
-import userRouter from './modules/user'
 
 Vue.use(Router)
 
@@ -75,7 +74,6 @@ export const constantRoutes = [
       component: () => import('@/views/import/index')
     }]
   },
-  userRouter,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
@@ -83,14 +81,14 @@ export const constantRoutes = [
 // 动态路由
 // 导出的路由会被 权限管理 使用
 export const asyncRoutes = [
-  approvalsRouter,
-  departmentsRouter,
   employeesRouter,
   permissionRouter,
   settingRouter,
+  departmentsRouter,
+  approvalsRouter,
+  socialRouter,
   attendancesRouter,
-  salarysRouter,
-  socialRouter
+  salarysRouter
 ]
 
 const createRouter = () => new Router({
