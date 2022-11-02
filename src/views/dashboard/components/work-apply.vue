@@ -31,21 +31,21 @@ export default {
           icon: 'el-icon-s-data',
           color: '#08AEEA',
           image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)',
-          link: '/users/leave-relevant'
+          link: '/approvals/leave-relevant'
         },
         {
           cardTitle: '加班离职',
           icon: 'el-icon-star-on',
           color: ' #74EBD5',
           image: 'linear-gradient(225deg, #74EBD5 0%, #9FACE6 100%)',
-          link: '/users/apply'
+          link: '/approvals/apply'
         },
         {
           cardTitle: '审批列表',
           icon: 'el-icon-s-order',
           color: '#ffd82a',
           image: 'linear-gradient(225deg, #ffd82a 0%, #38d2ad 100%)',
-          link: '/users/approvals'
+          link: '/approvals'
         },
         {
           cardTitle: '我的信息',
