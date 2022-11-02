@@ -1,10 +1,9 @@
 <template>
   <div class="changeSalary">
     <div class="infoBox">
-      <div class="logo"><img src="@/assets/common/img.jpeg" alt=""></div>
       <div class="info">
         <p>
-          <span class="name">{{ user.username }}</span>
+          <span class="name">姓名：{{ user.username }}</span>
         </p>
         <p>
           <span>部门：</span>
@@ -45,7 +44,7 @@
         <el-form-item label="调整幅度">
           <el-input v-model="computeChangeSize" style="width: 220px;" :disabled="true" />
         </el-form-item>
-        <div class="buttones" style="text-align: center;margin-top: 40px;">
+        <div style="text-align: left;margin-top: 40px;">
           <el-form-item>
             <el-button type="primary" @click="onSubmit">保存</el-button>
             <el-button @click="onClose">关闭</el-button>
@@ -128,19 +127,6 @@ export default {
       display: flex;
       border-bottom: solid 1px #ccc;
       margin-bottom: 20px;
-      padding: 10px 0 20px 0;
-      img{
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-      }
-      .logo{
-        border:solid 1px #ccc;
-        width: 102px;
-        height: 102px;
-        border-radius: 50%;
-        margin-right: 20px;
-      }
       .info{
         p{
           line-height: 30px;
@@ -152,9 +138,6 @@ export default {
             margin-left: 10px;
           }
         }
-      }
-      .buttones{
-        text-align: center;
       }
     }
     .Label{
