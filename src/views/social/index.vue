@@ -4,11 +4,11 @@
       <!-- 工具栏 -->
       <page-tools :show-before="true">
         <template v-slot:before>
-          本月{{ tips.dateRange }}：社保在缴 {{ tips.socialSecurityCount }} 公积金在缴 {{ tips.providentFundCount }} 增员 {{ tips.newsCount }} 减员 {{ tips.reducesCount }} 入职 {{ tips.worksCount }} 离职 {{ tips.leavesCount }}
+          社保缴纳人员总数：{{ page.total }} 人
         </template>
         <template v-slot:after>
-          <el-button size="mini" type="danger" @click="$router.push('/social_securitys/historicalArchiving')">历史归档</el-button>
-          <el-button size="mini" type="primary" @click="$router.push(`/social_securitys/monthStatement?yearMonth=${yearMonth}`)">{{ yearMonth }}报表</el-button>
+          <el-button size="small" plain type="danger" @click="$router.push('/social_securitys/historicalArchiving')">历史归档</el-button>
+          <el-button size="small" plain type="primary" @click="$router.push(`/social_securitys/monthStatement?yearMonth=${yearMonth}`)">{{ yearMonth }}报表</el-button>
         </template>
       </page-tools>
       <!-- 筛选组件 -->
@@ -64,7 +64,6 @@ export default {
         total: 0
       },
       selectParams: {},
-      tips: {},
       loading: false
     }
   },
@@ -86,6 +85,7 @@ export default {
         const { rows, total } = await getSocialList({ ...this.page, ...this.selectParams })
         this.list = rows // 列表数据
         this.page.total = total // 总数
+        console.log(this.list)
       } catch (error) {
         console.log(error)
       } finally {
@@ -102,10 +102,6 @@ export default {
     pageChange(page) {
       this.page.page = page // 当前
       this.getSocialList() // 获取列表数据
-    },
-    // 导出
-    handleExport() {
-      // GaolyQQ待实现
     }
   }
 }

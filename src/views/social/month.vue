@@ -1,111 +1,135 @@
 <template>
-  <div class="monthStatementBox">
-    <div class="monthStatementTop">
-      <div class="title">
-        <span>社保报表</span>
-      </div>
-    </div>
-    <div class="monthStatementTable">
-      <div class="itemDropDown">
-        <div class="topLab">
-          <div><span style="background-color:#cfeffe;" />已离职</div>
-          <div><span style="background-color:#a8f8bb;" />再入职</div>
-          <div><span style="background-color:#fedbd7;" />公司合计</div>
-          <div><span style="background-color:#ffe8c9;" />一级部门</div>
-          <div><span style="background-color:#fdfcd5;" />二级部门</div>
-          <div class="rightLabBox">
-            <el-button type="primary" size="small">导出</el-button>
+  <div class="dashboard-container">
+    <div class="app-container">
+      <el-card>
+        <div class="monthStatementBox">
+          <div class="monthStatementTop">
+            <div class="title">
+              <span>社保报表</span>
+            </div>
           </div>
+          <div class="monthStatementTable">
+            <div class="itemDropDown">
+              <el-row>
+                <div class="topLab">
+                  <div><span style="background-color:#cfeffe;" />当前为{{ yearVal }}社保报表</div>
+                </div>
+              </el-row>
+              <el-row>
+                <el-table
+                  v-loading="loading"
+                  :data="contentData"
+                  border
+                  style="width: 100%;text-align: center"
+                  empty-text="暂无数据"
+                  height="380"
+                  highlight-current-row
+                >
+                  <el-table-column type="index" label="序号" center width="50" />
+                  <el-table-column prop="username" label="姓名" width="150px" />
+                  <el-table-column prop="timeOfEntry" label="入职时间" width="150px">
+                    <template v-slot="{ row }">
+                      {{ row.timeOfEntry | formatDate }}
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="mobile" label="手机号" width="150px" />
+                  <el-table-column prop="idNumber" label="身份证号码" width="150px" />
+                  <el-table-column prop="theHighestDegreeOfEducation" label="学历" width="150px" />
+                  <el-table-column prop="bankCardNumber" label="开户行" width="150px" />
+                  <el-table-column prop="firstLevelDepartment" label="一级部门" width="150px" />
+                  <el-table-column prop="twoLevelDepartment" label="二级部门" width="150px" />
+                  <el-table-column prop="workingCity" label="工作城市" width="150px" />
+                  <el-table-column prop="socialSecurityComputerNumber" label="社保电脑号" width="150px" />
+                  <el-table-column prop="providentFundAccount" label="公积金账号" width="150px" />
+                  <el-table-column prop="leaveDate" label="离职时间" width="150px" />
+                  <el-table-column prop="householdRegistrationType" label="户籍类型" width="150px" />
+                  <el-table-column prop="participatingInTheCity" label="参保城市" width="150px" />
+                  <el-table-column prop="socialSecurityMonth" label="社保月份" width="150px" />
+                  <el-table-column prop="socialSecurityBase" label="社保基数" width="150px" />
+                  <el-table-column prop="socialSecurity" label="社保合计" width="150px" />
+                  <el-table-column prop="socialSecurityEnterprise" label="社保企业" width="150px" />
+                  <el-table-column prop="socialSecurityIndividual" label="社保个人" width="150px" />
+                  <el-table-column prop="providentFundCity" label="公积金城市" width="150px" />
+                  <el-table-column prop="providentFundMonth" label="公积金月份" width="150px" />
+                  <el-table-column prop="providentFundBase" label="公积金基数" width="150px" />
+                  <el-table-column prop="accumulationFundEnterpriseBase" label="公积金企业基数" width="150px" />
+                  <el-table-column
+                    prop="proportionOfProvidentFundEnterprises"
+                    label="公积金企业比例"
+                    width="150px"
+                  />
+                  <el-table-column prop="individualBaseOfProvidentFund" label="公积金个人基数" width="150px" />
+                  <el-table-column prop="personalRatioOfProvidentFund" label="公积金个人比例" width="150px" />
+                  <el-table-column prop="totalProvidentFund" label="公积金合计" width="150px" />
+                  <el-table-column prop="providentFundEnterprises" label="公积金企业" width="150px" />
+                  <el-table-column prop="providentFundIndividual" label="公积金个人" width="150px" />
+                  <el-table-column prop="pensionEnterpriseBase" label="养老企业基数" width="150px" />
+                  <el-table-column prop="proportionOfPensionEnterprises" label="养老企业比例" width="150px" />
+                  <el-table-column prop="pensionEnterprise" label="养老企业" width="150px" />
+                  <el-table-column prop="personalPensionBase" label="养老个人基数" width="150px" />
+                  <el-table-column prop="personalPensionRatio" label="养老个人比例" width="150px" />
+                  <el-table-column prop="oldAgeIndividual" label="养老个人" width="150px" />
+                  <el-table-column prop="unemploymentEnterpriseBase" label="失业企业基数" width="150px" />
+                  <el-table-column prop="proportionOfUnemployedEnterprises" label="失业企业比例" width="150px" />
+                  <el-table-column prop="unemployedEnterprise" label="失业企业" width="150px" />
+                  <el-table-column prop="theNumberOfUnemployedIndividuals" label="失业个人基数" width="150px" />
+                  <el-table-column prop="percentageOfUnemployedIndividuals" label="失业个人比例" width="150px" />
+                  <el-table-column prop="unemployedIndividual" label="失业个人" width="150px" />
+                  <el-table-column prop="medicalEnterpriseBase" label="医疗企业基数" width="150px" />
+                  <el-table-column prop="proportionOfMedicalEnterprises" label="医疗企业比例" width="150px" />
+                  <el-table-column prop="medicalEnterprise" label="医疗企业" width="150px" />
+                  <el-table-column prop="medicalPersonalBase" label="医疗个人基数" width="150px" />
+                  <el-table-column prop="medicalPersonalRatio" label="医疗个人比例" width="150px" />
+                  <el-table-column prop="medicalIndividual" label="医疗个人" width="150px" />
+                  <el-table-column prop="baseOfIndustrialInjuryEnterprises" label="工伤企业基数" width="150px" />
+                  <el-table-column
+                    prop="proportionOfIndustrialInjuryEnterprises"
+                    label="工伤企业比例"
+                    width="150px"
+                  />
+                  <el-table-column prop="industrialInjuryEnterprise" label="工伤企业" width="150px" />
+                  <el-table-column prop="fertilityEnterpriseBase" label="生育企业基数" width="150px" />
+                  <el-table-column prop="proportionOfFertilityEnterprises" label="生育企业比例" width="150px" />
+                  <el-table-column prop="childbearingEnterprise" label="生育企业" width="150px" />
+                  <el-table-column prop="baseOfSeriousIllness" label="大病企业基数" width="150px" />
+                  <el-table-column prop="proportionOfSeriouslyIllEnterprises" label="大病企业比例" width="150px" />
+                  <el-table-column prop="bigDiseaseEnterprise" label="大病企业" width="150px" />
+                  <el-table-column prop="personalBaseOfSeriousIllness" label="大病个人基数" width="150px" />
+                  <el-table-column prop="personalProportionOfSeriousIllness" label="大病个人比例" width="150px" />
+                  <el-table-column prop="aPersonOfGreatDisease" label="大病个人" width="150px" />
+                  <el-table-column prop="providentFundNotes" label="公积金备注" width="150px" />
+                  <el-table-column prop="socialSecurityNotes" label="社保备注" width="150px" />
+                </el-table>
+              </el-row>
+
+            </div>
+          </div>
+          <el-row type="flex" justify="left" align="middle" style="height:80px">
+            <el-col :span="12">
+              <el-button size="small" type="primary" @click="archivingReportForm">归档{{ yearVal }}报表</el-button>
+              <el-button size="small" type="primary" @click="createReportForm">新建报表</el-button>
+              <el-button size="small" type="primary" @click="$router.push('/social_securitys')">返回</el-button>
+            </el-col>
+          </el-row>
         </div>
-        <el-table
-          v-loading="loading"
-          :data="contentData"
-          border
-          style="width: 100%;text-align: center"
-          empty-text="暂无数据"
-          fit
-          highlight-current-row
-        >
-          <el-table-column type="index" label="序号" center width="50" />
-          <el-table-column prop="username" label="姓名" width="150px" />
-          <el-table-column prop="timeOfEntry" label="入职时间" :formatter="transformDateFormat" width="150px" />
-          <el-table-column prop="mobile" label="手机号" width="150px" />
-          <el-table-column prop="idNumber" label="身份证号码" width="150px" />
-          <el-table-column prop="theHighestDegreeOfEducation" label="学历" width="150px" />
-          <el-table-column prop="bankCardNumber" label="开户行" width="150px" />
-          <el-table-column prop="firstLevelDepartment" label="一级部门" width="150px" />
-          <el-table-column prop="twoLevelDepartment" label="二级部门" width="150px" />
-          <el-table-column prop="workingCity" label="工作城市" width="150px" />
-          <el-table-column prop="socialSecurityComputerNumber" label="社保电脑号" width="150px" />
-          <el-table-column prop="providentFundAccount" label="公积金账号" width="150px" />
-          <el-table-column prop="leaveDate" label="离职时间" width="150px" />
-          <el-table-column prop="householdRegistrationType" label="户籍类型" width="150px" />
-          <el-table-column prop="participatingInTheCity" label="参保城市" width="150px" />
-          <el-table-column prop="socialSecurityMonth" label="社保月份" width="150px" />
-          <el-table-column prop="socialSecurityBase" label="社保基数" width="150px" />
-          <el-table-column prop="socialSecurity" label="社保合计" width="150px" />
-          <el-table-column prop="socialSecurityEnterprise" label="社保企业" width="150px" />
-          <el-table-column prop="socialSecurityIndividual" label="社保个人" width="150px" />
-          <el-table-column prop="providentFundCity" label="公积金城市" width="150px" />
-          <el-table-column prop="providentFundMonth" label="公积金月份" width="150px" />
-          <el-table-column prop="providentFundBase" label="公积金基数" width="150px" />
-          <el-table-column prop="accumulationFundEnterpriseBase" label="公积金企业基数" width="150px" />
-          <el-table-column
-            prop="proportionOfProvidentFundEnterprises"
-            label="公积金企业比例"
-            width="150px"
-          />
-          <el-table-column prop="individualBaseOfProvidentFund" label="公积金个人基数" width="150px" />
-          <el-table-column prop="personalRatioOfProvidentFund" label="公积金个人比例" width="150px" />
-          <el-table-column prop="totalProvidentFund" label="公积金合计" width="150px" />
-          <el-table-column prop="providentFundEnterprises" label="公积金企业" width="150px" />
-          <el-table-column prop="providentFundIndividual" label="公积金个人" width="150px" />
-          <el-table-column prop="pensionEnterpriseBase" label="养老企业基数" width="150px" />
-          <el-table-column prop="proportionOfPensionEnterprises" label="养老企业比例" width="150px" />
-          <el-table-column prop="pensionEnterprise" label="养老企业" width="150px" />
-          <el-table-column prop="personalPensionBase" label="养老个人基数" width="150px" />
-          <el-table-column prop="personalPensionRatio" label="养老个人比例" width="150px" />
-          <el-table-column prop="oldAgeIndividual" label="养老个人" width="150px" />
-          <el-table-column prop="unemploymentEnterpriseBase" label="失业企业基数" width="150px" />
-          <el-table-column prop="proportionOfUnemployedEnterprises" label="失业企业比例" width="150px" />
-          <el-table-column prop="unemployedEnterprise" label="失业企业" width="150px" />
-          <el-table-column prop="theNumberOfUnemployedIndividuals" label="失业个人基数" width="150px" />
-          <el-table-column prop="percentageOfUnemployedIndividuals" label="失业个人比例" width="150px" />
-          <el-table-column prop="unemployedIndividual" label="失业个人" width="150px" />
-          <el-table-column prop="medicalEnterpriseBase" label="医疗企业基数" width="150px" />
-          <el-table-column prop="proportionOfMedicalEnterprises" label="医疗企业比例" width="150px" />
-          <el-table-column prop="medicalEnterprise" label="医疗企业" width="150px" />
-          <el-table-column prop="medicalPersonalBase" label="医疗个人基数" width="150px" />
-          <el-table-column prop="medicalPersonalRatio" label="医疗个人比例" width="150px" />
-          <el-table-column prop="medicalIndividual" label="医疗个人" width="150px" />
-          <el-table-column prop="baseOfIndustrialInjuryEnterprises" label="工伤企业基数" width="150px" />
-          <el-table-column
-            prop="proportionOfIndustrialInjuryEnterprises"
-            label="工伤企业比例"
-            width="150px"
-          />
-          <el-table-column prop="industrialInjuryEnterprise" label="工伤企业" width="150px" />
-          <el-table-column prop="fertilityEnterpriseBase" label="生育企业基数" width="150px" />
-          <el-table-column prop="proportionOfFertilityEnterprises" label="生育企业比例" width="150px" />
-          <el-table-column prop="childbearingEnterprise" label="生育企业" width="150px" />
-          <el-table-column prop="baseOfSeriousIllness" label="大病企业基数" width="150px" />
-          <el-table-column prop="proportionOfSeriouslyIllEnterprises" label="大病企业比例" width="150px" />
-          <el-table-column prop="bigDiseaseEnterprise" label="大病企业" width="150px" />
-          <el-table-column prop="personalBaseOfSeriousIllness" label="大病个人基数" width="150px" />
-          <el-table-column prop="personalProportionOfSeriousIllness" label="大病个人比例" width="150px" />
-          <el-table-column prop="aPersonOfGreatDisease" label="大病个人" width="150px" />
-          <el-table-column prop="providentFundNotes" label="公积金备注" width="150px" />
-          <el-table-column prop="socialSecurityNotes" label="社保备注" width="150px" />
-        </el-table>
-      </div>
+      </el-card>
     </div>
-    <el-row type="flex" justify="center" align="middle" style="height:60px">
-      <el-col :span="12">
-        <el-button size="small" type="primary" @click="archivingReportForm">归档{{ yearVal ? yearVal.substr(4) : '' }}报表</el-button>
-        <el-button size="small" type="primary" @click="createReportForm">新建报表</el-button>
-        <el-button size="small" @click="$router.back()">取消</el-button>
-      </el-col>
-    </el-row>
+    <el-dialog :visible="showDateSelect" width="350px" title="选择日期" @close="showDateSelect = false">
+      <el-row>
+        <el-col :span="18">
+          <el-date-picker
+            v-model="selectDate"
+            type="month"
+            placeholder="选择月"
+            value-format="yyyyMM"
+          />
+        </el-col>
+        <el-col :span="6">
+          <el-button type="primary" @click="btnOk">确认</el-button>
+        </el-col>
+      </el-row>
+
+    </el-dialog>
   </div>
 
 </template>
@@ -119,7 +143,14 @@ export default {
       num: 0,
       yearVal: this.$route.query.yearMonth,
       contentData: [],
-      loading: false
+      loading: false,
+      showDateSelect: false,
+      selectDate: '',
+      rules: {
+        date1: [
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {
@@ -137,26 +168,37 @@ export default {
         await getArchivingArchive({ yearMonth: this.yearVal })
         this.$message({
           type: 'success',
-          message: '确定!'
+          message: '社保报表归档成功!'
         })
       })
     },
     // 新建报表
     createReportForm() {
-      const yearMonth = this.getNextMonth()
+      this.showDateSelect = true
+    },
+    // 日期选择
+    btnOk() {
+      if (this.selectDate === '') {
+        this.$message.error('请选择日期')
+        return
+      }
+      const yearMonth = this.selectDate
       const year = yearMonth.substring(0, 4)
       const month = yearMonth.substring(4)
       this.$confirm(
         '您将创建 《 ' + year + '年' + month + '月 》 报表'
       ).then(() => {
+        this.yearVal = yearMonth
         this.yearMonth = yearMonth
         this.createNewReport(yearMonth)
         this.getArchivingCont()
+        this.showDateSelect = false
       })
     },
+
     async createNewReport(yearMonth) {
       await newReport({ yearMonth })
-      this.$message.success('操作成功')
+      this.$message.success('创建报表成功')
     },
     getNextMonth() {
       const year = this.yearVal.substring(0, 4)
@@ -263,18 +305,7 @@ export default {
                 // background:$cl-1;
               }
             }
-            .rightLabBox{
-              position: absolute;
-              right: -10px;
-              top:10px;
-              div{
-                border:solid 1px $green;
-                color:$green;
-                border-radius:3px;
-                padding: 4px 10px;
-                font-size: 14px;
-              }
-          }
+
         }
         .act{
           border-bottom:solid 3px $panGreen;

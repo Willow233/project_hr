@@ -4,7 +4,7 @@
       <!-- 工具栏 -->
       <page-tools :show-before="true">
         <!-- 前面内容 -->
-        <template v-slot:before>有 {{ attendInfo.tobeTaskCount }} 条考勤审批尚未处理</template>
+        <template v-slot:before>{{ yearMonth }} 考勤列表</template>
       </page-tools>
       <!-- 考勤数据 -->
       <el-card class="hr-block">
@@ -17,11 +17,11 @@
                 <th width="100">姓名</th>
                 <th width="100">工号</th>
                 <th width="200">部门</th>
-                <th width="100">手机</th>
+                <th width="150">手机</th>
                 <th v-for="(it, ind) in monthOfReport" :key="ind" width="110">{{ attendInfo.month }}/{{ ind + 1 }}</th>
               </tr>
               <tr v-for="(item, index) in list" :key="item.id">
-                <td width="50">{{ index }}</td>
+                <td width="50">{{ index+1 }}</td>
                 <td width="100">{{ item.username }}</td>
                 <td width="100">{{ item.workNumber }}</td>
                 <td width="200">{{ item.departmentName }}</td>
@@ -63,10 +63,10 @@
         <!-- 考勤修改 -->
         <el-dialog
           :visible.sync="centerDialogVisible"
-          width="30%"
+          width="500px"
           center
         >
-          <span slot="title" style="color:#fff;">{{ attendInfo.name }} {{ attendInfo.month }}/{{ attendInfo.getDate }}（实际工作日考勤方案）</span>
+          <span slot="title" style="color:white">修改考勤状态 - 日期：{{ attendInfo.month }}月{{ attendInfo.getDate }}日</span>
           <div class="attenInfo">
             <p class="colRed">注：统计考勤时，异常状态优先正常状态</p>
             <p class="check">
@@ -113,7 +113,7 @@ export default {
       // 考勤状态
       stateData: attendanceApi,
       departments: [],
-      total: 100,
+      total: 0,
       attendanceRecord: '',
       monthOfReport: '',
       centerDialogVisible: false,
@@ -128,17 +128,10 @@ export default {
         counts: '',
         tobeTaskCount: ''
       },
-      formData: {
-        page: 1,
-        pagesize: 10,
-        keyword: this.keyword,
-        deptID: [], // 性别
-        stateID: ''
-      },
       // 页码
       page: {
         page: 1,
-        pagesize: 10,
+        pagesize: 6,
         total: 0
       },
       // 修改考勤数据
@@ -188,7 +181,7 @@ export default {
     // 页码改变
     pageChange(page) {
       this.page.page = page
-      // this.getAttendancesList() // 获取数据
+      this.getAttendancesList() // 获取数据
     },
     showChangeDialog(item, id, it) {
       this.modifyData.userId = item.id
@@ -215,16 +208,16 @@ export default {
     border-bottom: 0 none;
     tr {
       th {
-        height: 50px;
+        height: 60px;
+        color: #909399;
         text-align: center;
         border-right: solid 1px #ebeef5;
         border-bottom: solid 1px #ebeef5;
-        border-bottom: 2px solid #e8e8e8;
-        background: #fafafa;
-        min-width:  100px;
+        min-width:  50px;
       }
       td {
-        height: 36px;
+        height: 60px;
+        color:rgb(96,98,102);
         text-align: center;
         border-right: solid 1px #ebeef5;
         border-bottom: solid 1px #ebeef5;

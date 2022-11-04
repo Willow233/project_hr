@@ -53,11 +53,6 @@ export function getArchivingArchive(data) {
   })
 }
 
-export function getTips(yearMonth) {
-  return request({
-    url: `/social_securitys/tips/${yearMonth}`
-  })
-}
 export function saveContent(data) {
   return request({
     url: `/social_securitys/${data.userId}`,

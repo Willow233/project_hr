@@ -1,35 +1,11 @@
 <template>
   <div class="detailBox">
-    <div class="detailTop">
-      <div>
-        <img src="@/assets/common/img.jpeg" width="100" height="100" alt>
-      </div>
-      <div>
-        <b>{{ sizeForm.user.username }}</b>
-        <span :class="dutyStatus?'job-txt-green':'job-txt-red'">{{ dutyStatusTxt }}</span>
-        <br>
-        <p>
-          <span>最新工资基数 {{ sizeForm.salaryBase }}  </span>
-          &emsp;&emsp;
-          <span>入职时间   {{ sizeForm.user.timeOfEntry | formatDate }}</span>
-          &emsp;&emsp;
-          <span>联系电话 {{ sizeForm.user.mobile }}</span>
-        </p>
-        <br>
-        <p>
-          本月不缴纳社保
-          <el-switch v-model="isPaySocialInMonth" active-color="#13ce66" inactive-color="#ff4949" />&emsp;&emsp;
-          本月不缴纳公积金
-          <el-switch
-            v-model="isPayProvidentInMonth"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          />
-        </p>
-      </div>
-    </div>
     <div class="detailContentBox">
+
       <el-form ref="sizeForm.userSocialSecurity" :model="sizeForm.userSocialSecurity" :rules="rules" label-width="100px" size="mini">
+        <el-form-item label="员工姓名">
+          <el-input v-model="sizeForm.user.username" disabled style="width:185px;" />
+        </el-form-item>
         <el-form-item label="参保城市" prop="participatingInTheCity">
           <el-select
             v-model="sizeForm.userSocialSecurity.participatingInTheCity"
@@ -55,10 +31,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="社保基数" prop="socialSecurityBase">
-          <el-input v-model="sizeForm.userSocialSecurity.socialSecurityBase" type="number" style="width:38%" />（基数范围是3387 ~ 25401）
+          <el-input v-model="sizeForm.userSocialSecurity.socialSecurityBase" type="number" style="width:185px;" />（基数范围是3387 ~ 25401）
         </el-form-item>
         <el-form-item label="工伤比例" prop="industrialInjuryRatio">
-          <el-input v-model="sizeForm.userSocialSecurity.industrialInjuryRatio" style="width:38%" type="number" />（比例范围是0.2％ ~ 3％，推荐0.2％）
+          <el-input v-model="sizeForm.userSocialSecurity.industrialInjuryRatio" type="number" style="width:185px;" />（比例范围是0.2％ ~ 3％，推荐0.2％）
         </el-form-item>
         <el-form-item label="社保缴纳">
           <el-form-item label="个人" label-width="74px" style="display:inline-block">
@@ -468,16 +444,6 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .detailBox {
   margin: 20px;
-  .detailTop {
-    background: #fff;
-    padding: 15px;
-    display: flex;
-    img {
-      border-radius: 50%;
-      margin-right: 40px;
-      box-shadow: 1px 2px 4px #cccccc;
-    }
-  }
   .detailContentBox {
     margin: 15px 0;
     padding: 15px;

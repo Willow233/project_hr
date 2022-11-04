@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <div class="app-container">
       <page-tools :show-before="true">
-        <span slot="before" style="font-size:12px; ">共{{ page.total }}条记录</span>
+        <span slot="before">共计 {{ page.total }} 名员工</span>
         <template slot="after">
           <el-button size="small" type="success" plain @click="$router.push('/import')">excel导入</el-button>
           <el-button size="small" type="danger" plain @click="exportData">excel导出</el-button>

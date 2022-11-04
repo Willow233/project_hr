@@ -1,6 +1,13 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
+      <!-- 工具栏 -->
+      <page-tools :show-before="true">
+        <template v-slot:before>
+          共{{ total }}条审批记录
+        </template>
+      </page-tools>
+      <!-- 审批列表 -->
       <el-card>
         <div class="usersApprovalsContainer">
           <div class="approvalsTop">
@@ -107,10 +114,10 @@
               </el-table>
               <el-row type="flex" justify="center" style="height:60px" align="middle">
                 <el-pagination
-                  :total="Number(total)"
-                  :page-sizes="[10,20,30, 50]"
+                  :total="total"
+                  :current-page="pagination.page"
+                  :page-size="pagination.pageSize"
                   layout="prev, pager, next"
-                  @size-change="handleSizeChange"
                   @current-change="handleCurrentChange"
                 />
               </el-row>
@@ -194,8 +201,8 @@ export default {
       approvalsState: baseApi.approvalState,
       approvalsStates: [],
       tableData: [],
-      page: null,
-      pageSize: null,
+      // page: null,
+      // pageSize: null,
       total: '',
       selectedId: '',
       pagination: {
@@ -249,13 +256,6 @@ export default {
       this.pagination.processKey = this.approvalsTypes
       this.pagination.processState = this.approvalsStates.join(',')
       this.getApprovalList()
-    },
-    // 每页显示信息条数
-    handleSizeChange(pageSize) {
-      this.pagination.pagesize = pageSize
-      if (this.pagination.page === 1) {
-        this.getApprovalList()
-      }
     },
     // 进入某一页
     handleCurrentChange(val) {

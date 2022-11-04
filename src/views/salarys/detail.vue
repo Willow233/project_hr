@@ -1,8 +1,11 @@
 <template>
   <div class="detailsContainer">
     <div class="contLeft">
+      <el-row type="flex" justify="end">
+        <el-button type="primary" size="small" style="margin-top:5px;" plain @click="$router.push('/salarys')">返回</el-button>
+      </el-row>
+      <el-divider />
       <div class="topTit">
-        <img src="@/assets/common/img.jpeg" alt="">
         <div class="info">
           <p class="name"><strong> {{ user.username }} </strong><span :class="dutyStatus">{{ dutyStatusTxt }}</span></p>
           <p class="time">入职时间:  {{ user.timeOfEntry | formatDate }}   最新工资： {{ formLabelAlign.currentPostWage + formLabelAlign.currentBasicSalary }} <ul><span class="more">?</span><li>员工所有调薪后的基本工资、岗位工资合计</li></ul></p>
@@ -37,13 +40,6 @@
             </el-form-item>
           </el-form>
         </div>
-      </div>
-    </div>
-    <div class="contRit">
-      <div class="topTit"><strong>招聘日程</strong></div>
-      <div class="Items">
-        <li><div class="name"><p>HR专员</p><p>2018-12-3 3:30</p></div><div class="act"> <strong>放弃</strong> </div></li>
-        <li><div class="name"><p>HR专员</p><p>2018-12-3 3:30</p></div><div class="act"> <strong>放弃</strong> </div></li>
       </div>
     </div>
   </div>
@@ -127,6 +123,7 @@ export default {
     },
     async getHistorysData() {
       this.socialData = await getHistorysData({ userId: this.userId, yearMonth: this.yearMonth })
+      console.log(this.socialData)
     },
     async getUserDetailById() {
       this.user = await getUserDetailById(this.userId)
@@ -203,7 +200,6 @@ export default {
                 line-height: 20px;
                 display: none;
                 background: #fff;
-                border: solid 1px #ccc;
               }
               li::before{
                 position:absolute;
@@ -282,45 +278,6 @@ export default {
       }
       .formTable{
         margin-top: 20px;
-      }
-    }
-    .contRit{
-      flex: 1;
-      background: #fff;
-      padding:0 20px;
-      .topTit{
-        margin-bottom: 10px;
-        border-bottom: solid 1px #ccc;
-        line-height: 40px;
-      }
-      .Items{
-        padding: 20px 0;
-        li{
-          display: flex;
-          .name{
-            position: relative;
-            text-align: center;
-            line-height: 24px;
-            padding: 0 0 10px 0;
-            flex: 2;
-            border-right:solid 1px #ccc;
-          }
-          .name:after{
-            content: ' ';
-            border-radius: 50%;
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border:solid 2px $green1;
-            right: -5px;
-            top:0px;
-            background: #fff;
-          }
-          .act{
-            flex: 1;
-            text-align: center;
-          }
-        }
       }
     }
   }

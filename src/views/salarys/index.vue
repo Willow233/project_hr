@@ -93,7 +93,7 @@ export default {
       page: {
         total: 0,
         page: 1,
-        pageSize: 6
+        pageSize: 7
       },
       tips: {},
       yearMonth: '',
