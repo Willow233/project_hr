@@ -27,7 +27,7 @@
                     :key="item.deploymentId"
                     :label="item.key"
                     :value="item.key"
-                    @change="changeSelectParams"
+                    @click.native.prevent="checkRadio(item.key)"
                   >{{ item.name }}</el-radio>
                 </el-radio-group>
               </div>
@@ -46,22 +46,23 @@
             </div>
             <div>
               <!-- 排序组件需要 设置列的prop 和sortable才能使得默认的排序生效 -->
-              <el-table :data="tableData" style="width: 100%" :default-sort="{order: 'descending',prop: 'procApplyTime'}">
-                <el-table-column type="selection" width="28" />
-                <el-table-column type="index" label="序号" width="60" />
-                <el-table-column prop="processName" label="审批类型" />
-                <el-table-column v-if="tagName!=='launch'" prop="username" label="申请人" />
+              <el-table :data="tableData" style="width: 100%" :default-sort="{order: 'descending',prop: 'procApplyTime'}" border>
+                <el-table-column type="index" label="序号" width="60" align="center" />
+                <el-table-column prop="processName" label="审批类型" width="200" align="center" />
+                <el-table-column v-if="tagName!=='launch'" prop="username" label="申请人" align="center" />
                 <el-table-column
                   v-if="tagName!=='approvals'"
                   prop="procCurrNodeUserName"
                   label="当前审批人"
+                  width="300"
+                  align="center"
                 />
-                <el-table-column label="申请时间" sortable prop="procApplyTime">
+                <el-table-column label="申请时间" sortable prop="procApplyTime" align="center">
                   <template slot-scope="scope">
                     <span>{{ scope.row.procApplyTime | formatDate }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="审批状态">
+                <el-table-column label="审批状态" align="center">
                   <template slot-scope="scope">
                     <span v-if="scope.row.processState==='0'" class="rovalsState">
                       <em class="sub" />已提交
@@ -80,7 +81,7 @@
                     </span>
                   </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column label="操作" align="center">
                   <template slot-scope="scope">
                     <!--  && (item.row.stateOfApproval == '待审批' || item.row.stateOfApproval == '已驳回') -->
                     <el-button
@@ -203,11 +204,11 @@ export default {
       tableData: [],
       // page: null,
       // pageSize: null,
-      total: '',
+      total: 0,
       selectedId: '',
       pagination: {
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
         process_key$equal: this.process_key$equal,
         process_state$in: this.process_state$in
         // proc_apply_user_id$equal:''
@@ -252,6 +253,17 @@ export default {
       this.getApprovalList()
       this.$message.success('操作成功')
     },
+    // 取消单选
+    checkRadio(value) {
+      if (this.approvalsTypes === value) {
+        this.approvalsTypes = ''
+        this.changeSelectParams()
+        return
+      }
+      this.approvalsTypes = value
+      this.changeSelectParams()
+    },
+    // 根据选项筛选数据
     changeSelectParams() {
       this.pagination.processKey = this.approvalsTypes
       this.pagination.processState = this.approvalsStates.join(',')
@@ -410,4 +422,10 @@ export default {
 .el-textarea__inner{ // 然后找到对应的类名，在这里将拉伸去掉即可
   resize: none;
   }
+// 清除单选框多余样式
+::v-deep.el-radio:focus:not(.is-focus):not(:active):not(.is-disabled)
+.el-radio__inner {
+    -webkit-box-shadow: none;
+    box-shadow:none;
+}
 </style>

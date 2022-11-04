@@ -73,7 +73,7 @@ export default {
     return {
       page: {
         page: 1,
-        size: 6,
+        size: 10,
         total: 0
       },
       employeesList: [],

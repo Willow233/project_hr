@@ -79,15 +79,15 @@ export default {
     },
     {
       id: '2',
-      value: '审批驳回'
+      value: '审批通过'
     },
     {
       id: '3',
-      value: '已撤销'
+      value: '审批不通过'
     },
     {
       id: '4',
-      value: '审批通过'
+      value: '撤销'
     }
   ]
 }

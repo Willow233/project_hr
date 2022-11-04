@@ -3,7 +3,8 @@
     <div class="app-container">
       <!-- 靠右的按钮 -->
       <!-- 新增角色按钮 -->
-      <page-tools>
+      <page-tools :show-before="true">
+        <span slot="before">共计 {{ page.total }} 种角色</span>
         <template v-slot:after>
           <el-button size="small" type="primary" plain @click="editRole()">新增角色</el-button>
         </template>
@@ -60,7 +61,7 @@ export default {
     return {
       page: {
         page: 1,
-        pagesize: 5,
+        pagesize: 6,
         total: 0
       },
       roleList: [],
