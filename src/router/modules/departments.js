@@ -7,6 +7,7 @@ export default {
   children: [{
     path: '', // ''表示二级路由的默认路由
     component: () => import('@/views/departments'),
+    name: '组织架构',
     // 路由元信息 用于存储数据
     meta: {
       title: '组织架构', // 左侧导航栏名称

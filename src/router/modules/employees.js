@@ -7,6 +7,7 @@ export default {
   children: [{
     path: '', // ''表示二级路由的默认路由
     component: () => import('@/views/employees'),
+    name: '员工管理', // 用于tag标签
     // 路由元信息 用于存储数据
     meta: {
       title: '员工管理', // 左侧导航栏名称
@@ -15,6 +16,7 @@ export default {
   }, {
     path: 'detail/:id?', // query传参 动态路由传参 ?表示id不是必须的
     component: () => import('@/views/employees/detail'),
+    name: '员工详情',
     hidden: true, // 表示该内容不在左侧菜单显示
     meta: {
       title: '员工详情' // 标记当前路由规则的中文名称 后续在做左侧菜单时 使用
@@ -23,6 +25,7 @@ export default {
   {
     path: 'print/:id?', // 二级默认路由
     component: () => import('@/views/employees/print'), // 按需加载
+    name: '打印',
     hidden: true,
     meta: {
       title: '打印', // 标记当前路由规则的中文名称 后续在做左侧菜单时 使用

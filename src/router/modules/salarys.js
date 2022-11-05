@@ -9,7 +9,7 @@ const salaryRouter = {
     {
       path: '',
       component: () => import('@/views/salarys'),
-      name: 'salarys',
+      name: '工资',
       meta: {
         title: '工资',
         icon: 'money'
@@ -18,19 +18,19 @@ const salaryRouter = {
     {
       path: 'setting',
       component: () => import('@/views/salarys/setting'),
-      name: 'salarysSetting',
+      name: '工资设置',
       hidden: true,
       meta: {
-        title: '设置'
+        title: '工资设置'
       }
     },
     {
       path: 'details/:yearMonth/:id',
       component: () => import('@/views/salarys/detail'),
-      name: 'salarysDetails',
+      name: '工资详情',
       hidden: true,
       meta: {
-        title: '详情'
+        title: '工资详情'
       }
     }
   ]

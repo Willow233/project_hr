@@ -131,7 +131,7 @@ export default {
       // 页码
       page: {
         page: 1,
-        pagesize: 6,
+        pagesize: 10,
         total: 0
       },
       // 修改考勤数据

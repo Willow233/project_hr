@@ -61,7 +61,7 @@ export default {
     return {
       page: {
         page: 1,
-        pagesize: 6,
+        pagesize: 10,
         total: 0
       },
       roleList: [],

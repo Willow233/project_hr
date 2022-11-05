@@ -8,7 +8,7 @@ export default {
     {
       path: '',
       component: () => import('@/views/approvals/index.vue'),
-      name: 'approvals',
+      name: '审批列表',
       meta: {
         title: '审批',
         icon: 'tree-table'
@@ -17,7 +17,7 @@ export default {
     {
       path: '/approvals/apply',
       component: () => import('@/views/approvals/components/apply'),
-      name: 'apply',
+      name: '加班离职申请',
       hidden: true,
       meta: {
         title: '加班离职申请',
@@ -26,7 +26,7 @@ export default {
     {
       path: '/approvals/leave-relevant',
       component: () => import('@/views/approvals/components/leave-relevant'),
-      name: 'leave-relevant',
+      name: '请假调休申请',
       hidden: true,
       meta: {
         title: '请假调休',

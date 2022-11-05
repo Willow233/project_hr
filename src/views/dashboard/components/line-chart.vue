@@ -48,7 +48,7 @@ export default {
         trigger: 'axis'
       },
       legend: {
-        data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+        data: ['人事部', '财务部', '技术部', '运营部', '市场部']
       },
       grid: {
         left: '3%',
@@ -59,41 +59,41 @@ export default {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
       },
       yAxis: {
         type: 'value'
       },
       series: [
         {
-          name: 'Email',
+          name: '人事部',
           type: 'line',
           stack: 'Total',
-          data: [120, 132, 101, 134, 90, 230, 210]
+          data: [120, 232, 201, 234, 290, 330, 410]
         },
         {
-          name: 'Union Ads',
+          name: '财务部',
           type: 'line',
           stack: 'Total',
-          data: [220, 182, 191, 234, 290, 330, 310]
+          data: [320, 282, 291, 334, 290, 430, 510]
         },
         {
-          name: 'Video Ads',
+          name: '技术部',
           type: 'line',
           stack: 'Total',
-          data: [150, 232, 201, 154, 190, 330, 410]
+          data: [350, 232, 301, 454, 290, 330, 410]
         },
         {
-          name: 'Direct',
+          name: '运营部',
           type: 'line',
           stack: 'Total',
-          data: [320, 332, 301, 334, 390, 330, 320]
+          data: [220, 432, 401, 434, 490, 530, 720]
         },
         {
-          name: 'Search Engine',
+          name: '市场部',
           type: 'line',
           stack: 'Total',
-          data: [820, 932, 901, 934, 1290, 1330, 1320]
+          data: [620, 632, 901, 934, 1090, 1330, 1320]
         }
       ]
     })

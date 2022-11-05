@@ -94,7 +94,6 @@ export default {
       this.employeesList = result.rows
       this.page.total = result.total
       this.loading = false
-      console.log('页面刷新')
     },
     // 监听页面更新
     handleCurrentChange(val) {

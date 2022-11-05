@@ -7,6 +7,7 @@ export default {
   children: [{
     path: '', // ''表示二级路由的默认路由
     component: () => import('@/views/setting'),
+    name: '角色设置',
     // 路由元信息 用于存储数据
     meta: {
       title: '角色设置', // 左侧导航栏名称

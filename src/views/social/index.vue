@@ -85,7 +85,6 @@ export default {
         const { rows, total } = await getSocialList({ ...this.page, ...this.selectParams })
         this.list = rows // 列表数据
         this.page.total = total // 总数
-        console.log(this.list)
       } catch (error) {
         console.log(error)
       } finally {

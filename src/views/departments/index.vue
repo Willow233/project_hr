@@ -78,6 +78,9 @@ export default {
 </script>
 
 <style scoped>
+.app-container {
+  margin-top:10px ;
+}
 .tree-card {
   padding: 30px 140px;
   font-size:14px;
