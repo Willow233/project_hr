@@ -26,7 +26,7 @@
             <!-- 绩效指数 -->
             <el-card class="box-card" style="height: 350px">
               <div slot="header" class="clearfix">
-                <span>绩效指数</span>
+                <span class="header-title">绩效指数</span>
               </div>
               <line-chart />
             </el-card>
@@ -35,24 +35,16 @@
           <el-row>
             <el-card class="box-card announce-card" style="height: 150px">
               <div slot="header" class="clearfix">
-                <span>公告</span>
+                <span class="header-title">公告</span>
               </div>
               <ul class="announce">
-                <li class=""><a href="./zwxx/zwtzgg/202210/t20221011_2833238.html" title="关于2019-2020年度北京市社会公用充电 设施运营考核奖励项目年度评审评价结果的公告（第四批）" target="_blank">
-                  关于2019-2020年度北京市社会公用充电 设施运营考核奖励项目年度评审评价结果的公告（第四批）
-                </a><span class="date">
-                  2022-10-11
-                </span></li>
-                <li class=""><a href="./zwxx/zwtzgg/202209/t20220928_2825525.html" title="关于公示注册信息变更的售电公司相关信息的通知" target="_blank">
-                  关于公示注册信息变更的售电公司相关信息的通知
-                </a><span class="date">
-                  2022-09-28
-                </span></li>
-                <li class=""><a href="./zwxx/zwtzgg/202209/t20220923_2821802.html" title="2022年北京市城市管理委员会信息安全外包服务公开招标公告" target="_blank">
-                  2022年北京市城市管理委员会信息安全外包服务公开招标公告
-                </a><span class="date">
-                  2022-09-23
-                </span></li>
+                <li v-for="item in news" :key="item.id">
+                  <a :href="item.url" :title="item.title" target="_blank">
+                    {{ item.title }}
+                  </a>
+                  <span class="date">
+                    {{ item.date }}
+                  </span></li>
               </ul>
             </el-card>
           </el-row>
@@ -63,7 +55,7 @@
           <el-row>
             <el-card class="box-card" style="height: 250px">
               <div slot="header" class="clearfix">
-                <span>流程申请</span>
+                <span class="header-title">流程申请</span>
               </div>
               <work-apply />
             </el-card>
@@ -72,8 +64,7 @@
           <el-row>
             <el-card class="box-card" style="height: 350px">
               <div slot="header" class="clearfix">
-                <span>工作日历</span>
-              </div>
+                <span class="header-title">工作日历</span></div>
               <work-calender />
             </el-card>
           </el-row>
@@ -100,7 +91,26 @@ export default {
   },
   data() {
     return {
-      defaultImg: require('@/assets/common/defaultHead.png')
+      defaultImg: require('@/assets/common/defaultHead.png'),
+      news: [{
+        id: 1,
+        url: 'http://www.beijing.gov.cn/fuwu/bmfw/sy/jrts/202211/t20221104_2851445.html',
+        title: '地铁5号线大屯路东站至天通苑北站将于11月5日起提前收车 公交集团增加运力保障出行',
+        date: '2022-10-11'
+      },
+      {
+        id: 2,
+        url: 'http://www.beijing.gov.cn/fuwu/bmfw/sy/jrts/202211/t20221105_2852302.html',
+        title: '第六届中国戏曲文化周在北京园博园启动 游园赏秋看好戏 和合共美！',
+        date: '2022-10-10'
+      },
+      {
+        id: 3,
+        url: 'http://www.beijing.gov.cn/ywdt/yaowen/202211/t20221105_2852311.html',
+        title: '中华环保世纪行2022年宣传活动在京举行 “贯彻习近平生态文明思想 用法治力量保护生态环境” ',
+        date: '2022-09-11'
+      }
+      ]
     }
   },
   computed: {
@@ -170,7 +180,21 @@ color: #fff;
 
   }
 }
-
+.el-card{
+  .header-title{
+    font-weight: 700;
+    color: #43BCFF;
+    &::before{
+      content: '';
+      display: inline-block;
+      margin-right:10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #43BCFF;
+    }
+  }
+}
 .el-card__body {
   display: flex;
   overflow: auto;
@@ -182,15 +206,35 @@ color: #fff;
 
 .announce{
   margin: 0;
+  height: 100px;
+  overflow: hidden;
+  overflow-y:auto;
   li {
-    height: 20px;
-    font-size: 12px;
-    line-height: 20px;
-    padding-right: 90px;
     position: relative;
+    height: 12px;
+    font-size: 12px;
+    line-height: 12px;
+    list-style-type:none;
+    margin-bottom: 10px;
+    margin-left: -20px;
+    a{
+      color:#2c97f4;
+    vertical-align: middle;
+    display: inline-block;
+    width:450px ;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    &:hover{
+      color:#202020;
+    }
+    }
+    .date {
+      color: #a8a8a8;
+      position: absolute;
+      right: 20px;
+    }
+
 }
 }
 

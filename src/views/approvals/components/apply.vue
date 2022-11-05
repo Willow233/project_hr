@@ -13,7 +13,7 @@
             enctype="multipart/form-data"
           >
             <el-form-item label="申请类型">
-              <el-select v-model="opType" placeholder="请选择" style="width: 220px;" @change="handleChange">
+              <el-select v-model="opType" placeholder="请选择" style="width: 220px;" prop="applyType" @change="handleChange">
                 <el-option
                   v-for="item in baseData.applyType"
                   :key="item.id"
@@ -32,7 +32,7 @@
                   placeholder="选择日期"
                 />
               </el-form-item>
-              <el-form-item label="离职原因" :class="computeOpType?'item-enable':'item-dismiss'" prop="">
+              <el-form-item label="离职原因" :class="computeOpType?'item-enable':'item-dismiss'" prop="reason">
                 <el-input
                   v-model="ruleForm2.reason"
                   type="textarea"
@@ -114,9 +114,10 @@ export default {
         userId: this.$store.getters.userId
       },
       rules: {
-        holidayType: [{ required: true, message: '请选择假期类型', trigger: 'blur' }],
-        startTime: [{ required: true, message: '开始时间', trigger: 'blur' }],
-        endTime: [{ required: true, message: '结束时间', trigger: 'blur' }],
+        applyType: [{ required: true, message: '请选择申请类型', trigger: 'blur' }],
+        start_time: [{ required: true, message: '开始时间', trigger: 'blur' }],
+        end_time: [{ required: true, message: '结束时间', trigger: 'blur' }],
+        exceptTime: [{ required: true, message: '请选择期望离职时间', trigger: 'blur' }],
         reason: [{ required: true, message: '请填写原因', trigger: 'blur' }]
       },
       baseData: commonApi,
@@ -134,13 +135,13 @@ export default {
     async  submitForm(name) {
       try {
         if (this.state === 3) {
+          // await this.$refs.ruleForm.validate()
           this.ruleForm.processKey = 'process_dimission'
           this.ruleForm.processName = '离职'
-          await this.$refs.ruleForm.validate()
         } else {
+          // await this.$refs.ruleForm.validate()
           this.ruleForm.processKey = 'process_overtime'
           this.ruleForm.processName = '加班'
-          await this.$refs.ruleForm.validate()
         }
         this.ruleForm.userId = this.$store.getters.userId
         await startProcess(this.ruleForm)

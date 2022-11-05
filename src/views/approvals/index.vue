@@ -152,7 +152,7 @@
           <!--查看弹框-->
           <!-- 通过审核 -->
           <el-dialog
-            title="通过审核"
+            title="备注"
             :visible.sync="adoptVisible"
             width="30%"
             top="8vh"
