@@ -27,7 +27,7 @@ export default {
     return {
       countData: [
         {
-          cardTitle: '请假调休',
+          cardTitle: '请假申请',
           icon: 'el-icon-s-data',
           color: '#08AEEA',
           image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)',

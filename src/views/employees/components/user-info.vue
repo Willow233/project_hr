@@ -85,9 +85,9 @@
             />
           </el-select>
         </el-form-item>
-        <!-- 个人头像 -->
-        <!-- 员工照片 -->
-        <el-form-item label="员工照片">
+        <!-- 证件照 -->
+        <!-- 证件照 -->
+        <el-form-item label="证件照">
           <image-upload ref="myStaffPhoto" />
           <!-- 放置上传图片 -->
         </el-form-item>

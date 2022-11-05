@@ -125,24 +125,24 @@
             </div>
           </div>
           <!--查看弹框-->
-          <el-dialog :title="topLabel" :visible.sync="centerDialogVisible" width="50%" left>
+          <el-dialog :title="topLabel" :visible.sync="centerDialogVisible" width="600px" top="8vh" left>
 
             <Quit
-              v-show="seeState == 'quit'"
+              v-if="seeState == 'quit'"
               ref="quit"
               :selected-id="selectedId"
               :tab-lab="tagName"
               @closeDialog="closeDialog"
             />
             <Leave
-              v-show="seeState == 'leave'"
+              v-if="seeState == 'leave'"
               ref="leave"
               :selected-id="selectedId"
               :tab-lab="tagName"
               @closeDialog="closeDialog"
             />
             <Overtime
-              v-show="seeState == 'overtime'"
+              v-if="seeState == 'overtime'"
               ref="overtime"
               :selected-id="selectedId"
               :tab-lab="tagName"
@@ -155,6 +155,7 @@
             title="通过审核"
             :visible.sync="adoptVisible"
             width="30%"
+            top="8vh"
             :before-close="handleClose"
           >
             <span><el-input v-model="formData.handleOpinion" type="textarea" /></span>
@@ -244,14 +245,14 @@ export default {
     },
     async handleProcess() {
       await approvalsPass(this.formData)
-      this.$message.success('操作成功')
+      this.$message.success('审批通过')
       this.getApprovalList()
       this.adoptVisible = false
     },
     async rejectProcess(id) {
       await approvalsReject({ id })
       this.getApprovalList()
-      this.$message.success('操作成功')
+      this.$message.success('已驳回该审批')
     },
     // 取消单选
     checkRadio(value) {
@@ -326,32 +327,26 @@ export default {
       this.centerDialogVisible = true
       this.topLabel = approvalType
       switch (approvalType) {
-        case '调岗':
-          this.seeState = 'adjustThePost'
-          break
         case '离职':
           this.seeState = 'quit'
           this.selectedId = id
-          this.$refs.quit.updateData()
+          // this.$refs.quit.updateData()
           break
         case '加班':
           this.seeState = 'overtime'
           this.selectedId = id
-          this.$refs.overtime.updateData()
+          // this.$refs.overtime.updateData()
           break
         case '请假':
           this.seeState = 'leave'
           this.selectedId = id
-          this.$refs.leave.updateData()
+          // this.$refs.leave.updateData()
           break
         case '调休':
           this.seeState = 'leave'
           this.selectedId = id
-          this.$refs.leave.updateData()
+          // this.$refs.leave.updateData()
           break
-        default:
-          this.seeState = 'becomeARegularWorker'
-          this.topLabel = '转正'
       }
     },
     closeDialog() {

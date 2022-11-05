@@ -56,7 +56,10 @@ export default {
   data() {
     return {
       user: {},
-      socialData: {},
+      socialData: {
+        socialSecurityEnterprise: 0,
+        providentFundEnterprises: 0
+      },
       atteData: {},
       paymentData: {
         p1: 0,
@@ -123,7 +126,6 @@ export default {
     },
     async getHistorysData() {
       this.socialData = await getHistorysData({ userId: this.userId, yearMonth: this.yearMonth })
-      console.log(this.socialData)
     },
     async getUserDetailById() {
       this.user = await getUserDetailById(this.userId)

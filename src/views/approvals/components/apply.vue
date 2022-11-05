@@ -6,6 +6,7 @@
           <el-form
             ref="ruleForm"
             :model="ruleForm"
+            :rules="rules"
             status-icon
             label-width="110px"
             class="demo-ruleForm"
@@ -75,8 +76,9 @@
             </div>
             <!--加班表单-->
             <el-form-item>
-              <el-button @click="submitForm('ruleForm')">提交</el-button>
-              <el-button @click="resetForm">重置</el-button>
+              <el-button size="small" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+              <el-button size="small" type="primary" @click="resetForm">重置</el-button>
+              <el-button size="small" type="primary" @click="$router.push('/dashboard')">返回</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -111,6 +113,12 @@ export default {
         processName: '离职',
         userId: this.$store.getters.userId
       },
+      rules: {
+        holidayType: [{ required: true, message: '请选择假期类型', trigger: 'blur' }],
+        startTime: [{ required: true, message: '开始时间', trigger: 'blur' }],
+        endTime: [{ required: true, message: '结束时间', trigger: 'blur' }],
+        reason: [{ required: true, message: '请填写原因', trigger: 'blur' }]
+      },
       baseData: commonApi,
       state: '3'
     }
@@ -124,16 +132,23 @@ export default {
   },
   methods: {
     async  submitForm(name) {
-      if (this.state === 3) {
-        this.ruleForm.processKey = 'process_dimission'
-        this.ruleForm.processName = '离职'
-      } else {
-        this.ruleForm.processKey = 'process_overtime'
-        this.ruleForm.processName = '加班'
+      try {
+        if (this.state === 3) {
+          this.ruleForm.processKey = 'process_dimission'
+          this.ruleForm.processName = '离职'
+          await this.$refs.ruleForm.validate()
+        } else {
+          this.ruleForm.processKey = 'process_overtime'
+          this.ruleForm.processName = '加班'
+          await this.$refs.ruleForm.validate()
+        }
+        this.ruleForm.userId = this.$store.getters.userId
+        await startProcess(this.ruleForm)
+        this.$message.success('提交申请成功!')
+        this.$router.push('/dashboard')
+      } catch (error) {
+        console.log(error)
       }
-      this.ruleForm.userId = this.$store.getters.userId
-      await startProcess(this.ruleForm)
-      this.$emit('handleShow')
     },
     resetForm() {
       this.ruleForm = {}
