@@ -11,13 +11,8 @@
                 <img v-imageError="defaultImg" :src="staffPhoto" class="user-avatar">
                 <div class="text">
                   <span class="username">{{ name }}</span>
-                  <span class="role-name"> {{ userInfo.departmentName }} | 早上好，祝您有开心的一天</span>
+                  <span class="role-name"> {{ userInfo.departmentName }} | 遇见您真好，祝您有开心的一天</span>
                 </div>
-                <!-- <div class="dept-name">
-                  <i class="el-icon-s-promotion" />
-                  {{ userInfo.departmentName }}
-                </div> -->
-
               </div>
             </el-card>
           </el-row>
@@ -113,12 +108,12 @@ export default {
       ]
     }
   },
+
   computed: {
     ...mapGetters([
       'name', 'staffPhoto'
     ]),
     ...mapState(['userInfo'])
-
   }
 }
 </script>

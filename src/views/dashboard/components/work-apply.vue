@@ -31,14 +31,14 @@ export default {
           icon: 'el-icon-s-data',
           color: '#08AEEA',
           image: 'linear-gradient(35deg, #08AEEA 0%, #2AF598 100%)',
-          link: '/approvals/leave-relevant'
+          link: '/user/leave-relevant'
         },
         {
           cardTitle: '加班离职',
           icon: 'el-icon-star-on',
           color: ' #74EBD5',
           image: 'linear-gradient(225deg, #74EBD5 0%, #9FACE6 100%)',
-          link: '/approvals/apply'
+          link: '/user/apply'
         },
         {
           cardTitle: '审批列表',
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     getId() {
-      this.countData[3].link = `/employees/detail/${this.userId}`
+      this.countData[3].link = `/user/detail/${this.userId}`
     }
   }
 }
