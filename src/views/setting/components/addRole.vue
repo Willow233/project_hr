@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑弹层" :visible="showDialog" @close="btnCancel">
+  <el-dialog :title="title" :visible="showDialog" @close="btnCancel">
     <el-form ref="roleForm" :model="roleForm" :rules="rules" label-width="120px">
       <el-form-item label="角色名称" prop="name">
         <el-input v-model="roleForm.name" />
@@ -29,6 +29,7 @@ export default {
   },
   data() {
     return {
+      title: '新增角色',
       roleForm: {
         name: '',
         description: ''
@@ -48,9 +49,10 @@ export default {
   },
   methods: {
     // 在父组件中 通过ref 调用了该方法
-    async getRole(id) {
+    async getRoleDetail(id) {
     // 获取当前角色信息
       if (id) {
+        this.title = '编辑角色'
         this.roleForm = await getRole(id)
       }
     },

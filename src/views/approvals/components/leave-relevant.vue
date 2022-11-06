@@ -130,7 +130,7 @@ export default {
       this.ruleForm = {}
     },
     handleChange(obj) {
-      console.log(this.ruleForm.holidayType)
+      // console.log(this.ruleForm.holidayType)
       this.state = obj
     },
     getDuration() {

@@ -217,6 +217,10 @@
   // 弹窗信息
   .el-dialog__header {
     background: #66b1ff;
+    height: 55px;
+    line-height: 55px;
+    padding: 0 0 0 20px;
+    vertical-align: middle;
   
     .el-icon-close:before {
       color: #fff;

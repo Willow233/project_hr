@@ -87,7 +87,7 @@ export default {
       const data = await getApprovalsDetail(this.selectedId)
       this.ruleForm = data
       this.ruleForm.data = JSON.parse(this.ruleForm.procData)
-      console.log(this.ruleForm)
+      // console.log(this.ruleForm)
     }
   }
 }

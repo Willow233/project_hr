@@ -9,16 +9,6 @@
             <el-input v-model="userInfo.workNumber" class="inputW" />
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="入职时间">
-            <el-date-picker
-              v-model="userInfo.timeOfEntry"
-              type="date"
-              class="inputW"
-              value-format="YYYY-MM-DD"
-            />
-          </el-form-item>
-        </el-col>
       </el-row>
       <!-- 姓名 部门 -->
       <el-row class="inline-info">
@@ -37,7 +27,7 @@
       <el-row class="inline-info">
         <el-col :span="12">
           <el-form-item label="手机">
-            <el-input v-model="userInfo.mobile" disabled />
+            <el-input v-model="userInfo.mobile" disabled class="inputW" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -66,7 +56,7 @@
       <el-row class="inline-info" type="flex" justify="center">
         <el-col :span="12">
           <el-button type="primary" @click="saveUser">保存更新</el-button>
-          <el-button @click="$router.back()">返回</el-button>
+          <el-button @click="getUserDetailById()">重置</el-button>
 
         </el-col>
       </el-row>
@@ -272,7 +262,7 @@
         <el-row class="inline-info" type="flex" justify="center">
           <el-col :span="12">
             <el-button type="primary" @click="savePersonal">保存更新</el-button>
-            <el-button @click="$router.back()">返回</el-button>
+            <el-button @click="getPersonalDetail">重置</el-button>
           </el-col>
         </el-row>
       </div>
@@ -375,7 +365,12 @@ export default {
       // 判断图片是否完成上传
       if (fileList.some(item => !item.upload)) {
         // 说明此时还有图片正在上传
-        this.$message.warning('图片还未上传完成')
+        // this.$message.warning('图片还未上传完成')
+        const h = this.$createElement
+        this.$notify({
+          title: '暂不支持头像上传',
+          message: h('i', { style: 'color: teal' }, '暂不提供腾讯云服务，无法上传头像，请删除图片或重置后提交')
+        })
         return
       }
       await saveUserDetailById({ ...this.userInfo, staffPhoto: fileList.length ? fileList[0].url : ' ' })
@@ -393,6 +388,11 @@ export default {
       if (fileList.some(item => !item.upload)) {
         // 说明此时还有图片正在上传
         this.$message.warning('图片还未上传完成')
+        const h = this.$createElement
+        this.$notify({
+          title: '暂不支持头像上传',
+          message: h('i', { style: 'color: teal' }, '暂不提供腾讯云服务，无法上传头像，请删除图片或重置后提交')
+        })
         return
       }
       await updatePersonal({ ...this.formData, staffPhoto: fileList.length ? fileList[0].url : ' ' })
