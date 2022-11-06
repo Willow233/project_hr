@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     // 在父组件中 通过ref 调用了该方法
-    async getRoleDetail(id) {
+    async getRole(id) {
     // 获取当前角色信息
       if (id) {
         this.roleForm = await getRole(id)

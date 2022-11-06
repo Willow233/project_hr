@@ -166,7 +166,7 @@ export default {
         // item {username:'张三'，mobile:'123'}
         return Object.keys(headers).map(key => {
           // 判断是否为时间字段
-          if (headers[key] === 'timeOfEntry' || headers[key] === 'formOfEmployment') {
+          if (headers[key] === 'timeOfEntry' || headers[key] === 'correctionTime') {
             // 格式化时间
             return formatDate(item[headers[key]])
           } else if (headers[key] === 'formOfEmployment') {

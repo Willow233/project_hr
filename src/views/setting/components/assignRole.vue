@@ -28,7 +28,7 @@
 <script>
 import { getPermissionList } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
-import { assignPerm, getRoleDetail } from '@/api/setting.js'
+import { assignPerm, getRole } from '@/api/setting.js'
 export default {
   props: {
     showPermDialog: {
@@ -53,7 +53,7 @@ export default {
     async getPermId(id) {
       this.permData = transListToTreeData(await getPermissionList(), '0')
       this.currentId = id
-      const { permIds } = await getRoleDetail(id)
+      const { permIds } = await getRole(id)
       this.selectCheck = permIds
     },
     async btnPermOK() {

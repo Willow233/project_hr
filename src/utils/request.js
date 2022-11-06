@@ -6,7 +6,7 @@ import { getTimeStamp } from '@/utils/auth.js'
 const TimeOut = 7200 // token超时时间
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API, // npm run dev =>api npm run build => /prod-api
   timeout: 5000 // 设置超时时间
 })
 // 请求拦截器

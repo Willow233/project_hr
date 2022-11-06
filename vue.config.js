@@ -14,6 +14,35 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+let cdn = { css: [], js: [] }
+const isProd = process.env.NODE_ENV === 'production'
+let externals = {}
+if (isProd) {
+  // key(要排除的包名)：value(CDN全局变量名)
+  // 例：排除element-ui后要引入CDN文件，CDN文件中有ELEMENTUI的全局变量名
+  externals = {
+    'vue': 'Vue',
+    'element-ui': 'ELEMENT',
+    'xlsx/xlsx.mjs': 'XLSX',
+    'cos-js-sdk-v5': 'COS'
+  }
+  cdn = {
+    css: [
+      // element-ui css
+      'https://unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css' // 样式表
+    ],
+    js: [
+      // vue must at first!
+      'https://unpkg.com/vue@2.6.10/dist/vue.js', // vuejs
+      // element-ui js
+      'https://unpkg.com/element-ui@2.13.2/lib/index.js', // elementUI
+      // 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/jszip.min.js',
+      'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+      'https://cdn.jsdelivr.net/npm/cos-js-sdk-v5@1.4.6/dist/cos-js-sdk-v5.min.js'
+
+    ]
+  }
+}
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -47,6 +76,7 @@ module.exports = {
       }
     }
   },
+  // webpack配置属性
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
@@ -55,8 +85,11 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    // 判断环境后赋值
+    externals: externals
   },
+
   chainWebpack(config) {
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
@@ -68,7 +101,13 @@ module.exports = {
         include: 'initial'
       }
     ])
-
+    // webpack中的插件 注入CDN变量
+    // 在打包时执行 将cdn注入到html模板 也就是public/index.html中
+    config.plugin('html').tap((args) => {
+      // args是注入html模板的变量
+      args[0].cdn = cdn // 将配置的cdn添加到参数中
+      return args // 返回参数
+    })
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 

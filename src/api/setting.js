@@ -17,7 +17,7 @@ export function delRole(id) {
 }
 
 // 获取当前角色
-export function getRoleDetail(id) {
+export function getRole(id) {
   return request({
     url: `/sys/role/${id}`
   })
