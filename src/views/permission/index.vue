@@ -13,7 +13,6 @@
         <el-table :title="showText" border :data="list" row-key="id">
           <el-table-column label="名称" prop="name" align="center" />
           <el-table-column label="标识" prop="code" align="center" />
-          <!-- Todo 优化一级 标识改为下拉菜单栏 和 路由的命名相对应 -->
           <el-table-column label="描述" prop="description" align="center" />
           <el-table-column label="操作" align="center" width="240px">
             <template v-slot="{row}">
