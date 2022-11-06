@@ -33,10 +33,9 @@ if (isProd) {
     ],
     js: [
       // vue must at first!
-      'https://unpkg.com/vue@2.6.10/dist/vue.js', // vuejs
+      'https://unpkg.com/vue@2.6.10/dist/vue.min.js', // vuejs
       // element-ui js
       'https://unpkg.com/element-ui@2.13.2/lib/index.js', // elementUI
-      // 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/jszip.min.js',
       'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
       'https://cdn.jsdelivr.net/npm/cos-js-sdk-v5@1.4.6/dist/cos-js-sdk-v5.min.js'
 
