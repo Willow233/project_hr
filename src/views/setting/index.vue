@@ -110,9 +110,9 @@ export default {
       this.$refs.addRole.getRoleDetail(id)
     },
     // 分配角色权限
-    assignRole(id) {
+    async assignRole(id) {
       // 获取该id的角色权限
-      this.$refs.assignRole.getPermId(id)
+      await this.$refs.assignRole.getPermId(id)
       this.showPermDialog = true
     }
   }

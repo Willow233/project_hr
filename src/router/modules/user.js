@@ -4,7 +4,7 @@ export default {
   path: '/user',
   component: Layout,
   hidden: true,
-  name: 'user',
+  name: 'users',
   children: [
     {
       path: '/user/apply',

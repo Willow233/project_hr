@@ -6,7 +6,8 @@
         <template slot="after">
           <el-button size="small" type="success" plain @click="$router.push('/import')">excel导入</el-button>
           <el-button size="small" type="danger" plain @click="exportData">excel导出</el-button>
-          <el-button size="small" type="primary" plain :disabled="!checkPermission('POINT-USER-ADD')" @click="addNewEmployee">新增员工</el-button>
+          <el-button size="small" type="primary" plain @click="addNewEmployee">新增员工</el-button>
+          <!-- <el-button size="small" type="primary" plain :disabled="!checkPermission('POINT-USER-ADD')" @click="addNewEmployee">新增员工</el-button> 按钮权限设置-->
         </template>
       </page-tools>
       <!-- 放置表格和分页 -->

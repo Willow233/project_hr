@@ -50,7 +50,9 @@ export default {
     // 在父组件中 通过ref 调用了该方法
     async getRoleDetail(id) {
     // 获取当前角色信息
-      this.roleForm = await getRole(id)
+      if (id) {
+        this.roleForm = await getRole(id)
+      }
     },
     // 确认
     btnOK() {
@@ -64,6 +66,8 @@ export default {
           }
           // 更新前端页面
           this.$emit('getRoleList')
+          // 成功提示
+          this.$message.success('操作成功！')
           // 关闭窗口
           this.btnCancel()
         }

@@ -26,10 +26,9 @@
 </template>
 
 <script>
-import { assignRoles } from '@/api/employees'
 import { getPermissionList } from '@/api/permission'
 import { transListToTreeData } from '@/utils'
-import { getRole } from '@/api/setting.js'
+import { assignPerm, getRoleDetail } from '@/api/setting.js'
 export default {
   props: {
     showPermDialog: {
@@ -47,25 +46,25 @@ export default {
       currentId: null
     }
   },
-  created() {
-    this.getPermissionList()
-  },
+  // created() {
+  //   this.getPermId()
+  // },
   methods: {
-    async getPermissionList() {
-      this.permData = transListToTreeData(await getPermissionList(), '0')
-    },
     async getPermId(id) {
+      this.permData = transListToTreeData(await getPermissionList(), '0')
       this.currentId = id
-      const { permIds } = await getRole(id)
+      const { permIds } = await getRoleDetail(id)
       this.selectCheck = permIds
-      // Todo 优化 把showDiaglog在这 数据获取完再展示
     },
     async btnPermOK() {
-      // 获取el-tree实例 并调用其方法
-      await assignRoles({ id: this.currentId, permIds: this.$refs.permTree.getCheckedKeys() })
-      this.$message.success('分配权限成功')
-      this.btnPermCancel()
-      console.log(this.selectCheck)
+      try {
+        // 获取el-tree实例 并调用其方法
+        await assignPerm({ id: this.currentId, permIds: this.$refs.permTree.getCheckedKeys() })
+        this.$message.success('分配权限成功')
+        this.btnPermCancel()
+      } catch (error) {
+        console.log(error)
+      }
     },
     btnPermCancel() {
     //   清空tree选中

@@ -2,7 +2,7 @@ import Layout from '@/layout'
 
 export default {
   path: '/department', // 一级路由地址
-  name: 'department', // 在权限设置时使用
+  name: 'departments', // 在权限设置时使用
   component: Layout,
   children: [{
     path: '', // ''表示二级路由的默认路由

@@ -13,7 +13,7 @@
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">如有问题，请联系管理员</div>
-        <a href="" class="bullshit__return-home">返回主页</a>
+        <el-button href="" class="bullshit__return-home" @click="$router.push('/dashboard')">返回主页</el-button>
       </div>
     </div>
   </div>
@@ -205,7 +205,6 @@ export default {
       color: #ffffff;
       opacity: 0;
       font-size: 14px;
-      line-height: 36px;
       cursor: pointer;
       animation-name: slideUp;
       animation-duration: 0.5s;

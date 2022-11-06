@@ -92,7 +92,8 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
+  base: 'hr/', // 默认前缀地址
   scrollBehavior: () => ({ y: 0 }),
 
   // routes: [...constantRoutes, ...asyncRoutes] // 临时显示所有路由

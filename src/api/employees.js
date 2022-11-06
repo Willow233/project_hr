@@ -92,7 +92,7 @@ export function updateJob(data) {
 // 保存用户角色信息
 export function assignRoles(data) {
   return request({
-    url: `/sys/user/assignRoles`,
+    url: '/sys/user/assignRoles',
     method: 'put',
     data
   })
