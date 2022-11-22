@@ -8,7 +8,14 @@
 
 ## Demo
 
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
+**首页**
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/dashboard.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/empolyee.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/aproval.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/loginPage.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/socialform.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/apply.png)
+![image](https://github.com/Willow233/Picture_project/blob/main/hrPicture/addDialog.png)
 
 ## 项目模板
 
