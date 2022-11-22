@@ -1,4 +1,4 @@
-# vue-admin-template
+# 人力资源后台管理系统
 
 English | [简体中文](./README-zh.md)
 
