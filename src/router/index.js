@@ -92,8 +92,7 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // 在github部署时 需要注释掉histor模式
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   base: 'hr/', // 默认前缀地址
   scrollBehavior: () => ({ y: 0 }),
 
