@@ -1,8 +1,7 @@
 # 人力资源后台管理系统
 
 > VUE2
-
-**在线地址** http://panjiachen.github.io/vue-admin-template
+**在线地址** http://Willow233.github.io/project_hr
 
 **项目简介：**
 
