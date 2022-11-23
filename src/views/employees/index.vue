@@ -34,8 +34,9 @@
           <el-table-column label="操作" fixed="right" align="center">
             <template v-slot="{row}">
               <el-button type="text" size="small" @click="$router.push(`/employees/detail/${row.id}?`)">查看</el-button>
-              <el-button type="text" size="small" @click="editRole(row.id)">角色</el-button>
-              <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
+              <!-- 管理员id 不允许修改或删除 row.id === '1063705989926227968' -->
+              <el-button type="text" size="small" :disabled="row.id === '1063705989926227968'" @click="editRole(row.id)">角色</el-button>
+              <el-button type="text" size="small" :disabled="row.id === '1063705989926227968'" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>

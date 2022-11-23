@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getInfo, getUserDetailById } from '@/api/user'
+import { saveUserDetailById } from '@/api/employees.js'
 import { resetRouter } from '@/router/index' // 导入router种重置路由的方法
 const state = {
   token: getToken(), // 设置token为共享状态 初始化vuex的时候 就先从缓存中读取
@@ -34,8 +35,15 @@ const actions = {
     context.commit('setToken', result) // 设置token
     setTimeStamp() // 设置当前时间戳
   },
-  async getUserInfo(context) {
+  async resetAdminName() {
     const result = await getInfo()
+    // 重置管理员名称
+    if (result.userId === '1063705989926227968') {
+      await saveUserDetailById({ id: '1063705989926227968', username: '管理员' })
+    }
+  },
+  async getUserInfo(context) {
+    const result = await getInfo() // token已经在请求拦截器中注入 此处不需要参数
     const baseInfo = await getUserDetailById(result.userId)
     context.commit('setUserInfo', { ...result, ...baseInfo })
     return result // 权限需要

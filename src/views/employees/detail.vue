@@ -15,7 +15,8 @@
               style="margin-left: 120px; margin-top:30px"
             >
               <el-form-item label="姓名:" prop="username">
-                <el-input v-model="employeeInfo.username" style="width:300px" />
+                <!-- 不允许修改管理员姓名 -->
+                <el-input v-model="employeeInfo.username" :disabled="userDetailId === '1063705989926227968'" style="width:300px" />
               </el-form-item>
               <el-form-item label="密码:" prop="password">
                 <el-input v-model="employeeInfo.password2" style="width:300px" type="password" />
@@ -63,6 +64,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import { saveUserDetailById } from '@/api/employees.js'
 import { getUserDetailById } from '@/api/user.js'
 import UserInfo from './components/user-info.vue'
@@ -77,7 +79,7 @@ export default {
       userComponent: 'UserInfo', // 动态组件绑定
       jobComponent: 'JobInfo',
       // 此处是route 不是router
-      userId: this.$route.params.id,
+      userDetailId: this.$route.params.id,
       employeeInfo: {
         username: '',
         password2: '' // 读取的是password密文 新存一个password2替换
@@ -89,12 +91,16 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['userId', 'name'])
+  },
   created() {
     this.getUserDetailById()
   },
   methods: {
+    ...mapActions('user', ['getUserInfo']),
     async getUserDetailById() {
-      this.employeeInfo = await getUserDetailById(this.userId)
+      this.employeeInfo = await getUserDetailById(this.userDetailId)
     },
     async saveBasicInfo() {
       try {
@@ -102,6 +108,10 @@ export default {
           if (valid) {
             await saveUserDetailById({ ...this.employeeInfo, password: this.employeeInfo.password2 })
             this.$message.success('更新密码成功')
+            // 判断是否是登录用户id 是则更新同步导航栏用户名
+            if (this.userDetailId === this.userId) {
+              this.getUserInfo()
+            }
           } else {
             this.message.error('用户名或密码格式不正确')
           }
