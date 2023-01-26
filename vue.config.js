@@ -1,7 +1,8 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
@@ -87,6 +88,7 @@ module.exports = {
     },
     // 判断环境后赋值
     externals: externals
+
   },
 
   chainWebpack(config) {
@@ -109,7 +111,10 @@ module.exports = {
     })
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
-
+    // 打包测速
+    config.plugin('xcTime').use(SpeedMeasurePlugin)
+    // 设置缓存优化 不能于SpeedMeasurePlugin同时使用
+    config.plugin('xcCache').use(HardSourceWebpackPlugin)
     // set svg-sprite-loader
     config.module
       .rule('svg')

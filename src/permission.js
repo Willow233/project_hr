@@ -16,6 +16,7 @@ router.beforeEach(async function(to, from, next) {
       // 判断vuex中是否有userId 表示已有资料 不需要获取
       if (!store.getters.userId) {
         await store.dispatch('user/resetAdminName') // 重置管理员名称
+        // async函数中return 返回的结果 用await可以接受到（getUserInfo中 最后return result 的原因
         const { roles } = await store.dispatch('user/getUserInfo') // 使用await 把异步任务改为同步任务，不然用户信息还未获取就会继续执行
         // console.log(roles.menus)
         // 此处为管理员id 避免管理员后台数据被修改而无法显示完整页面

@@ -46,7 +46,7 @@ const actions = {
     const result = await getInfo() // token已经在请求拦截器中注入 此处不需要参数
     const baseInfo = await getUserDetailById(result.userId)
     context.commit('setUserInfo', { ...result, ...baseInfo })
-    return result // 权限需要
+    return result // 权限需要 permission.js中获取result中的role.menus
   },
   logout(context) {
     context.commit('removeToken')

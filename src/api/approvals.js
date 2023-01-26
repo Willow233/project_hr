@@ -54,7 +54,7 @@ export function getApprovalsTaskDetail(id) {
 // 下载图片
 export function downImg(picture_id) {
   return request({
-    url: `//user/process/buss/showBussImgById/${picture_id}`
+    url: `/user/process/buss/showBussImgById/${picture_id}`
   })
 }
 // 获取流程列表
